@@ -53,6 +53,7 @@
                 android:layout_height="match_parent">
 
                 <ImageButton
+                    android:id="@+id/edit_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/edit"
@@ -63,9 +64,25 @@
                     android:paddingBottom="15dp"
                     android:layout_marginLeft="10dp"
                     />
+
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/share"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/white"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+
+                    />
+
                 
 
             </RelativeLayout>
+
 
             </LinearLayout>
 
