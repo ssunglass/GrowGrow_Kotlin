@@ -16,35 +16,35 @@ import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
 
-    internal var selectedFragment: Fragment? = null
-
 
 
     private val onNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener{ item ->
         when (item.itemId) {
             R.id.nav_home -> {
-                selectedFragment = HomeFragment()
+                moveToFragment(HomeFragment())
+                return@OnItemSelectedListener true
+
             }
             R.id.nav_search -> {
 
+                moveToFragment(SearchFragment())
 
-                selectedFragment = SearchFragment()
+                return@OnItemSelectedListener true
+
+
             }
             R.id.nav_profile -> {
 
+                moveToFragment(ProfileFragment())
 
-                selectedFragment = ProfileFragment()
+                return@OnItemSelectedListener true
+
+
+
             }
 
         }
-            if(selectedFragment != null) {
-                supportFragmentManager
-                        .beginTransaction()
-                        .replace(
-                                R.id.fragment_container,
-                                selectedFragment!!
-                        ).commit()
-        }
+
 
         false
     }
@@ -56,13 +56,17 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationBarView = findViewById(R.id.nav_view)
         navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
 
-        supportFragmentManager
-                .beginTransaction()
-                .replace(
-                        R.id.fragment_container,
-                        HomeFragment()
+        moveToFragment(HomeFragment())
 
-                ).commit()
 
     }
+
+    private fun moveToFragment(fragment: Fragment)
+    {
+        val fragmentTrans = supportFragmentManager.beginTransaction()
+        fragmentTrans.replace(R.id.fragment_container, fragment)
+        fragmentTrans.commit()
+
+    }
+
 }
