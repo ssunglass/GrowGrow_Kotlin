@@ -1,5 +1,6 @@
 package com.example.growgrow
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,6 +14,7 @@ import com.example.growgrow.Fragments.HomeFragment
 import com.example.growgrow.Fragments.ProfileFragment
 import com.example.growgrow.Fragments.SearchFragment
 import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,9 +55,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val auth = FirebaseAuth.getInstance()
         val navView: NavigationBarView = findViewById(R.id.nav_view)
-        navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
 
+        if (auth.currentUser == null) {
+            val intent = Intent(this, SigninActivity::class.java);
+            startActivity(intent)
+            finish()
+        }
+
+        navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
         moveToFragment(HomeFragment())
 
 
