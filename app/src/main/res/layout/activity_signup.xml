@@ -49,22 +49,34 @@
         android:layout_marginRight="20dp"
         android:hint="이메일"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <EditText
         android:id="@+id/password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/email_login"
+        android:layout_marginTop="10dp"
+        android:inputType="textEmailAddress"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="비밀번호"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/confirm_password_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_login"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirm_password_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="비밀번호"
+            android:hint="비밀번호 재확인"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -73,7 +85,7 @@
         android:id="@+id/signup_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password_login"
+        android:layout_below="@+id/confirm_password_layout"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"

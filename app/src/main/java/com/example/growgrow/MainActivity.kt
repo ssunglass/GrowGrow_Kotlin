@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
         val navView: NavigationBarView = findViewById(R.id.nav_view)
 
-        if (auth.currentUser != null) {
+        if (auth.currentUser == null) {
             val intent = Intent(this, SigninActivity::class.java);
             startActivity(intent)
             finish()
