@@ -58,7 +58,7 @@
         android:inputType="textEmailAddress"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="비밀번호"/>
+        android:hint="비밀번호 6자 이상"/>
 
     <com.google.android.material.textfield.TextInputLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
