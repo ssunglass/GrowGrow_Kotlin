@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
+    val auth = FirebaseAuth.getInstance()
+
 
 
     private val onNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener{ item ->
@@ -55,19 +57,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val auth = FirebaseAuth.getInstance()
         val navView: NavigationBarView = findViewById(R.id.nav_view)
 
-        if (auth.currentUser == null) {
-            val intent = Intent(this, SigninActivity::class.java);
-            startActivity(intent)
-            finish()
-        }
 
         navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
         moveToFragment(HomeFragment())
 
 
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+
+        if (auth.currentUser == null) {
+            val intent = Intent(this, SigninActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun moveToFragment(fragment: Fragment)
