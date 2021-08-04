@@ -101,7 +101,7 @@ class SignupActivity : AppCompatActivity() {
         user["username"] = username
         user["email"] = email
 
-        db.collection("users").document(currentUserId).set(user)
+        db.collection("Users").document(currentUserId).set(user)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful){
 

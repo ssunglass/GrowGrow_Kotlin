@@ -12,8 +12,6 @@ import com.example.growgrow.databinding.FragmentProfileBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -24,6 +22,7 @@ class ProfileFragment : Fragment() {
     // TODO: Rename and change types of parameters
 
     private var fragmentProfileBinding : FragmentProfileBinding? = null
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
