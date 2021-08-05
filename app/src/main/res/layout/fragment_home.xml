@@ -32,18 +32,20 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/currentUser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="이름"
                         android:textSize="30dp"/>
 
                     <TextView
+                        android:id="@+id/currentUsername"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Userid"/>
+                        android:layout_height="wrap_content" />
 
 
                 </LinearLayout>
@@ -55,17 +57,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="내 커리어 바로가기"
                         android:layout_alignParentRight="true"
+
 
                         />
                 </RelativeLayout>

@@ -1,18 +1,25 @@
 package com.example.growgrow.Fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentHomeBinding
 import com.example.growgrow.recyclerview.UserAdapter
 import com.example.growgrow.recyclerview.UserModel
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +35,12 @@ class HomeFragment : Fragment() {
     private lateinit var userArrayList : ArrayList<UserModel>
     private lateinit var myAdapter : UserAdapter
     private lateinit var db : FirebaseFirestore
+    private lateinit var auth : FirebaseAuth
+    private lateinit var uid: String
+   // private lateinit var dialog: Dialog
+    private lateinit var documentReference: DocumentReference
+
+
     private var fragmentHomeBinding : FragmentHomeBinding? = null
 
 
@@ -39,17 +52,44 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         fragmentHomeBinding = binding
 
+        auth = FirebaseAuth.getInstance()
+        uid = auth.currentUser?.uid.toString()
+        documentReference = FirebaseFirestore.getInstance()
+                .collection("Users")
+                .document(uid)
+
+
         recyclerView = binding.recyclerViewHome
         recyclerView.layoutManager = staggeredGridLayoutManager //LinearLayoutManager(requireContext())
        // recyclerView.setHasFixedSize(true)
-
         userArrayList = arrayListOf()
+
 
         myAdapter = UserAdapter(userArrayList)
 
         recyclerView.adapter = myAdapter
 
+        if(uid.isNotEmpty()){
+
+            documentReference
+                    .addSnapshotListener( object: EventListener<DocumentSnapshot>{
+
+                       override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
+
+                          binding.currentUser.text = value?.getString("fullname")
+                            binding.currentUsername.text = value?.getString("username")
+
+                       }
+
+                  })
+
+
+
+
+        }
+
         EventChangeListener()
+
 
 
         return  fragmentHomeBinding!!.root
@@ -64,21 +104,21 @@ class HomeFragment : Fragment() {
 
         db = FirebaseFirestore.getInstance()
         db.collection("Users")
-                .addSnapshotListener(object: EventListener<QuerySnapshot>{
+                .addSnapshotListener(object : EventListener<QuerySnapshot> {
 
                     override fun onEvent(
                             value: QuerySnapshot?,
                             error: FirebaseFirestoreException?) {
 
-                        if(error != null) {
+                        if (error != null) {
                             Log.e("FireStore Error", error.message.toString())
                             return
 
                         }
 
-                        for (dc : DocumentChange in value?.documentChanges!!){
+                        for (dc: DocumentChange in value?.documentChanges!!) {
 
-                            if(dc.type == DocumentChange.Type.ADDED){
+                            if (dc.type == DocumentChange.Type.ADDED) {
 
                                 userArrayList.add(dc.document.toObject(UserModel::class.java))
 
@@ -94,9 +134,28 @@ class HomeFragment : Fragment() {
                 })
 
 
+    }
+
+   /* private fun showProgressBar(){
+        dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+
+    }
+
+    private fun hideProgressBar(){
+
+        dialog.dismiss()
+
 
 
     }
+
+    */
+
+
+
 
     companion object {
         /**
