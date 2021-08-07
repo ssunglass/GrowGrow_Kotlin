@@ -45,7 +45,8 @@
                     <TextView
                         android:id="@+id/currentUsername"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"/>
 
 
                 </LinearLayout>
@@ -58,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+
                 >
 
                 <RelativeLayout

@@ -5,13 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.Fragments.HomeFragment
+import com.example.growgrow.Fragments.ProfileFragment
+import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import java.lang.reflect.Array
 import java.util.ArrayList
 
-class UserAdapter(private val userList: ArrayList<UserModel>) : RecyclerView.Adapter<UserAdapter.MyViewHolder>(){
+class UserAdapter(
+        private var mContext: Context,
+        private val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdapter.MyViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.MyViewHolder {
@@ -23,9 +28,19 @@ class UserAdapter(private val userList: ArrayList<UserModel>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: UserAdapter.MyViewHolder, position: Int) {
 
-        val user : UserModel = userList[position]
-        holder.fullName.text = user.fullname
-        holder.userName.text = user.username
+        val user : User = userList[position]
+        holder.fullName.text = user.getFullname()
+        holder.userName.text = user.getUsername()
+
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
+            pref.putString("profileId", user.getUid())
+            pref.apply()
+
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ProfileFragment()).commit()
+        })
+        
 
     }
 
@@ -45,5 +60,5 @@ class UserAdapter(private val userList: ArrayList<UserModel>) : RecyclerView.Ada
 
 }
 
-data class UserModel(var fullname:String? = null, var username:String? = null)
+// data class UserModel(var fullname:String? = null, var username:String? = null, var useruid:String? = null)
 

@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentHomeBinding
 import com.example.growgrow.recyclerview.UserAdapter
-import com.example.growgrow.recyclerview.UserModel
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
@@ -32,7 +32,7 @@ import com.google.firebase.firestore.*
 class HomeFragment : Fragment() {
 
     private lateinit var recyclerView : RecyclerView
-    private lateinit var userArrayList : ArrayList<UserModel>
+    private lateinit var userArrayList : ArrayList<User>
     private lateinit var myAdapter : UserAdapter
     private lateinit var db : FirebaseFirestore
     private lateinit var auth : FirebaseAuth
@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
         userArrayList = arrayListOf()
 
 
-        myAdapter = UserAdapter(userArrayList)
+        myAdapter = UserAdapter(requireContext(),userArrayList)
 
         recyclerView.adapter = myAdapter
 
@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
 
                        override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
 
-                          binding.currentUser.text = value?.getString("fullname")
+                           binding.currentUser.text = value?.getString("fullname")
                             binding.currentUsername.text = value?.getString("username")
 
                        }
@@ -89,6 +89,9 @@ class HomeFragment : Fragment() {
         }
 
         EventChangeListener()
+
+
+
 
 
 
@@ -120,7 +123,7 @@ class HomeFragment : Fragment() {
 
                             if (dc.type == DocumentChange.Type.ADDED) {
 
-                                userArrayList.add(dc.document.toObject(UserModel::class.java))
+                                userArrayList.add(dc.document.toObject(User::class.java))
 
                             }
 
