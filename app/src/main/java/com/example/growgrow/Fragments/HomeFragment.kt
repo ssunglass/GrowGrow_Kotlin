@@ -18,6 +18,7 @@ import com.example.growgrow.MainActivity
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentHomeBinding
+import com.example.growgrow.databinding.FragmentProfileBinding
 import com.example.growgrow.recyclerview.UserAdapter
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.navigation.NavigationBarView
@@ -46,8 +47,7 @@ class HomeFragment : Fragment() {
    // private lateinit var dialog: Dialog
     private lateinit var documentReference: DocumentReference
 
-
-    private var fragmentHomeBinding : FragmentHomeBinding? = null
+   private var fragmentHomeBinding : FragmentHomeBinding? = null
 
 
 
@@ -56,10 +56,8 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
+         fragmentHomeBinding = binding
 
-
-
-        fragmentHomeBinding = binding
 
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
@@ -74,20 +72,12 @@ class HomeFragment : Fragment() {
             transaction?.replace(R.id.fragment_container, ProfileFragment())
             transaction?.commit()
 
-
-
         })
-
-
-
-
 
         recyclerView = binding.recyclerViewHome
         recyclerView.layoutManager = staggeredGridLayoutManager //LinearLayoutManager(requireContext())
        // recyclerView.setHasFixedSize(true)
         userArrayList = arrayListOf()
-
-
         myAdapter = UserAdapter(requireContext(),userArrayList)
 
         recyclerView.adapter = myAdapter
@@ -97,14 +87,14 @@ class HomeFragment : Fragment() {
             documentReference
                     .addSnapshotListener( object: EventListener<DocumentSnapshot>{
 
-                       override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
+                        override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
 
-                           binding.currentUser.text = value?.getString("fullname")
+                            binding.currentUser.text = value?.getString("fullname")
                             binding.currentUsername.text = value?.getString("username")
 
-                       }
+                        }
 
-                  })
+                    })
 
 
 
@@ -116,11 +106,9 @@ class HomeFragment : Fragment() {
 
 
 
-
-
         return  fragmentHomeBinding!!.root
     }
-    
+
 
     override fun onDestroyView() {
         fragmentHomeBinding= null
@@ -162,6 +150,9 @@ class HomeFragment : Fragment() {
 
 
     }
+
+
+
 
 
 

@@ -100,6 +100,10 @@ class SignupActivity : AppCompatActivity() {
         user["fullname"] = fullname
         user["username"] = username
         user["email"] = email
+        user["summary"] = "한줄요약"
+        user["depart"] = "계열"
+        user["major"] = "전공"
+        user["region"] = "지역"
 
         db.collection("Users").document(currentUserId).set(user)
                 .addOnCompleteListener { task ->

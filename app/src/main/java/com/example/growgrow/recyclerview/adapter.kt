@@ -32,7 +32,7 @@ class UserAdapter(
         holder.fullName.text = user.getFullname()
         holder.userName.text = user.getUsername()
 
-        holder.itemView.setOnClickListener(View.OnClickListener {
+      /*  holder.itemView.setOnClickListener(View.OnClickListener {
             val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
             pref.putString("profileId", user.getUid())
             pref.apply()
@@ -40,6 +40,8 @@ class UserAdapter(
             (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, ProfileFragment()).commit()
         })
+
+       */
         
 
     }
