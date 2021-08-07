@@ -1,6 +1,7 @@
 package com.example.growgrow.Fragments
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,15 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.growgrow.MainActivity
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentHomeBinding
 import com.example.growgrow.recyclerview.UserAdapter
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 
@@ -32,11 +36,13 @@ import com.google.firebase.firestore.*
 class HomeFragment : Fragment() {
 
     private lateinit var recyclerView : RecyclerView
+    private lateinit var cardview: CardView
     private lateinit var userArrayList : ArrayList<User>
     private lateinit var myAdapter : UserAdapter
     private lateinit var db : FirebaseFirestore
     private lateinit var auth : FirebaseAuth
     private lateinit var uid: String
+
    // private lateinit var dialog: Dialog
     private lateinit var documentReference: DocumentReference
 
@@ -50,6 +56,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+
+
         fragmentHomeBinding = binding
 
         auth = FirebaseAuth.getInstance()
@@ -57,6 +66,20 @@ class HomeFragment : Fragment() {
         documentReference = FirebaseFirestore.getInstance()
                 .collection("Users")
                 .document(uid)
+
+        cardview = binding.appBarCard
+        cardview.setOnClickListener(View.OnClickListener {
+
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.fragment_container, ProfileFragment())
+            transaction?.commit()
+
+
+
+        })
+
+
+
 
 
         recyclerView = binding.recyclerViewHome
@@ -97,6 +120,7 @@ class HomeFragment : Fragment() {
 
         return  fragmentHomeBinding!!.root
     }
+    
 
     override fun onDestroyView() {
         fragmentHomeBinding= null
@@ -138,6 +162,8 @@ class HomeFragment : Fragment() {
 
 
     }
+
+
 
    /* private fun showProgressBar(){
         dialog = Dialog(requireContext())
