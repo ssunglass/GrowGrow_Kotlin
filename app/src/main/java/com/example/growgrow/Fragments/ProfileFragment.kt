@@ -1,22 +1,21 @@
 package com.example.growgrow.Fragments
 
-import android.content.Context
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.EventLog
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.fragment.app.Fragment
 import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
-import com.example.growgrow.databinding.ActivityEditProfileBinding
 import com.example.growgrow.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -134,6 +133,36 @@ class ProfileFragment : Fragment() {
 
             }
 
+            binding.addKeywordBtn.setOnClickListener{
+
+                val builder = AlertDialog.Builder(requireContext())
+                val dialogView = layoutInflater.inflate(R.layout.keyword_dialog, null)
+                val dialogText = dialogView.findViewById<EditText>(R.id.keyword_input)
+
+                builder.setView(dialogView)
+                        .setPositiveButton("등록", DialogInterface.OnClickListener { dialog, id ->
+
+                            
+
+                        }
+                        )
+
+                        .setNegativeButton("취소", null)
+
+                        .create()
+
+                        builder.setCancelable(false)
+
+                        builder.show()
+
+
+
+
+
+            }
+
+
+
 
             return fragmentProfileBinding!!.root
         }
@@ -143,6 +172,8 @@ class ProfileFragment : Fragment() {
             fragmentProfileBinding = null
             super.onDestroyView()
         }
+
+
 
 
 
