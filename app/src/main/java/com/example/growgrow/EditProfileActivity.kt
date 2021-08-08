@@ -81,7 +81,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun updateUserInfo(){
 
-        val db = Firebase.firestore
+        val db = FirebaseFirestore.getInstance()
 
         val user = HashMap<String, Any>()
 

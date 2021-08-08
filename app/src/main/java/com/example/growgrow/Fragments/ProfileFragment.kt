@@ -15,6 +15,9 @@ import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,6 +33,8 @@ class ProfileFragment : Fragment() {
     private lateinit var auth : FirebaseAuth
     private lateinit var userId: String
     private lateinit var userRef: DocumentReference
+    private lateinit var keyword: String
+    private lateinit var keywords: List<String>
 
 
     private var fragmentProfileBinding: FragmentProfileBinding? = null
@@ -42,7 +47,7 @@ class ProfileFragment : Fragment() {
             val binding = FragmentProfileBinding.inflate(inflater, container, false)
             fragmentProfileBinding = binding
 
-
+            db = FirebaseFirestore.getInstance()
             auth = FirebaseAuth.getInstance()
             userId = auth.currentUser?.uid.toString()
             userRef = FirebaseFirestore.getInstance()
@@ -134,7 +139,6 @@ class ProfileFragment : Fragment() {
             }
 
             binding.addKeywordBtn.setOnClickListener{
-
                 val builder = AlertDialog.Builder(requireContext())
                 val dialogView = layoutInflater.inflate(R.layout.keyword_dialog, null)
                 val dialogText = dialogView.findViewById<EditText>(R.id.keyword_input)
@@ -142,7 +146,10 @@ class ProfileFragment : Fragment() {
                 builder.setView(dialogView)
                         .setPositiveButton("등록", DialogInterface.OnClickListener { dialog, id ->
 
-                            
+                            keyword = dialogText.text.toString()
+
+                            db.collection("Users").document(userId)
+                                    .update("keywords",FieldValue.arrayUnion(keyword))
 
                         }
                         )
