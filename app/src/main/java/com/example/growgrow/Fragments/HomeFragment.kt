@@ -104,8 +104,6 @@ class HomeFragment : Fragment() {
         EventChangeListener()
 
 
-
-
         return  fragmentHomeBinding!!.root
     }
 

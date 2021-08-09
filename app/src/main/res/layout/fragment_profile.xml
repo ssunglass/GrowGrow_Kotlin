@@ -194,6 +194,8 @@
 
 
 
+
+
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/keywords_chip"
                     android:layout_width="match_parent"
@@ -229,6 +231,7 @@
 
 
             </LinearLayout>
+
 
 
 

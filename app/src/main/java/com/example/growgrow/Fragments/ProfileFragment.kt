@@ -13,6 +13,8 @@ import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentProfileBinding
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
@@ -50,9 +52,7 @@ class ProfileFragment : Fragment() {
             db = FirebaseFirestore.getInstance()
             auth = FirebaseAuth.getInstance()
             userId = auth.currentUser?.uid.toString()
-            userRef = FirebaseFirestore.getInstance()
-                    .collection("Users")
-                    .document(userId)
+            userRef = db.collection("Users").document(userId)
 
             val userRef = FirebaseFirestore.getInstance().collection("Users").document(userId)
 
@@ -70,6 +70,39 @@ class ProfileFragment : Fragment() {
                         binding.majorProfile.text = user.getMajor()
                     }
                 }
+
+            }
+
+            userRef.get().addOnSuccessListener { document ->
+                if (document != null) {
+
+                    val user = document.toObject<User>(User::class.java)
+
+                    if (user != null) {
+
+                        keywords = user.getKeywords()
+
+                        for(keyword in keywords){
+
+                            val chip_item_layout = layoutInflater.inflate(R.layout.chip_item, null)
+                            val chip_item = chip_item_layout.findViewById<Chip>(R.id.chip_item)
+                            val chip_group = binding.keywordsChip
+
+                            chip_item.text = keyword
+                            chip_item.setOnCloseIconClickListener{view ->
+                                chip_group.removeView(view)
+                            }
+                            chip_group.addView(chip_item)
+
+                        }
+
+
+                    }
+                }
+
+
+
+
 
             }
 
@@ -179,6 +212,7 @@ class ProfileFragment : Fragment() {
             fragmentProfileBinding = null
             super.onDestroyView()
         }
+
 
 
 
