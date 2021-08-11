@@ -186,6 +186,10 @@ class ProfileFragment : Fragment() {
                 val dialogView = layoutInflater.inflate(R.layout.keyword_dialog, null)
                 val dialogText = dialogView.findViewById<EditText>(R.id.keyword_input)
 
+                val chip_item_layout = layoutInflater.inflate(R.layout.chip_item, null)
+                val chip_item = chip_item_layout.findViewById<Chip>(R.id.chip_item)
+                val chip_group = binding.keywordsChip
+
                 builder.setView(dialogView)
                         .setPositiveButton("등록", DialogInterface.OnClickListener { dialog, id ->
 
@@ -193,6 +197,21 @@ class ProfileFragment : Fragment() {
 
                             db.collection("Users").document(userId)
                                     .update("keywords", FieldValue.arrayUnion(keyword))
+
+                            chip_item.text = keyword
+
+                            chip_item.setOnCloseIconClickListener{ view->
+                                val deleted_chip = (view as Chip).text.toString()
+                                db.collection("Users").document(userId)
+                                        .update("keywords", FieldValue.arrayRemove(deleted_chip))
+
+                                chip_group.removeView(view)
+
+
+
+                            }
+
+                            chip_group.addView(chip_item)
 
 
                         }
