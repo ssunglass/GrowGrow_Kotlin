@@ -13,12 +13,9 @@ import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentProfileBinding
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import java.util.*
 
 
@@ -89,12 +86,24 @@ class ProfileFragment : Fragment() {
                             val chip_group = binding.keywordsChip
 
                             chip_item.text = keyword
-                            chip_item.setOnCloseIconClickListener{view ->
+
+                            chip_item.setOnCloseIconClickListener{ view->
+                                val deleted_chip = (view as Chip).text.toString()
+                                db.collection("Users").document(userId)
+                                        .update("keywords", FieldValue.arrayRemove(deleted_chip))
+
                                 chip_group.removeView(view)
+
+
+
                             }
+
                             chip_group.addView(chip_item)
 
+
+
                         }
+
 
 
                     }
@@ -166,6 +175,7 @@ class ProfileFragment : Fragment() {
 
              ) */
 
+
             binding.editBtn.setOnClickListener {
                 startActivity(Intent(context, EditProfileActivity::class.java))
 
@@ -182,7 +192,8 @@ class ProfileFragment : Fragment() {
                             keyword = dialogText.text.toString()
 
                             db.collection("Users").document(userId)
-                                    .update("keywords",FieldValue.arrayUnion(keyword))
+                                    .update("keywords", FieldValue.arrayUnion(keyword))
+
 
                         }
                         )
@@ -193,7 +204,13 @@ class ProfileFragment : Fragment() {
 
                         builder.setCancelable(false)
 
+
+
                         builder.show()
+
+
+
+
 
 
 
@@ -212,6 +229,8 @@ class ProfileFragment : Fragment() {
             fragmentProfileBinding = null
             super.onDestroyView()
         }
+
+
 
 
 
