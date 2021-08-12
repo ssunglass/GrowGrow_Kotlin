@@ -31,6 +31,9 @@ class UserAdapter(
         val user : User = userList[position]
         holder.fullName.text = user.getFullname()
         holder.userName.text = user.getUsername()
+        holder.depart.text = user.getDepart()
+        holder.major.text = user.getMajor()
+        holder.summary.text = user.getSummary()
 
       /*  holder.itemView.setOnClickListener(View.OnClickListener {
             val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
@@ -54,6 +57,9 @@ class UserAdapter(
 
         val fullName : TextView = itemView.findViewById(R.id.fullname_textview)
         val userName : TextView = itemView.findViewById(R.id.username_textview)
+        val depart : TextView = itemView.findViewById(R.id.depart_textview)
+        val major : TextView = itemView.findViewById(R.id.major_textview)
+        val summary : TextView = itemView.findViewById(R.id.summary_testview)
 
 
 

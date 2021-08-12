@@ -10,6 +10,7 @@ class User {
     private var major:String = ""
     private var region:String = ""
     private var keywords: List<String> = arrayListOf()
+    private var bios: List<String> = arrayListOf()
 
 
 
@@ -23,7 +24,8 @@ class User {
                 depart: String,
                 region: String,
                 major: String,
-                keywords: List<String>)
+                keywords: List<String>,
+                bios: List<String>)
     {
         this.username = username
         this.fullname = fullname
@@ -33,6 +35,7 @@ class User {
         this.major = major
         this.depart = depart
         this.keywords = keywords
+        this.bios = bios
     }
 
     fun getUsername(): String {
@@ -53,17 +56,25 @@ class User {
     fun getSummary(): String {
         return summary
     }
+
     fun getRegion(): String {
         return region
     }
+
     fun getDepart(): String {
         return depart
     }
+
     fun getMajor(): String {
         return major
     }
+
     fun getKeywords(): List<String> {
         return keywords
+    }
+
+    fun getBios(): List<String> {
+        return bios
     }
 
 
