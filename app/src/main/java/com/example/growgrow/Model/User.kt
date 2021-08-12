@@ -1,5 +1,8 @@
 package com.example.growgrow.Model
 
+import android.icu.text.StringPrepParseException
+import java.util.*
+
 class User {
 
     private var username:String = ""
@@ -10,7 +13,6 @@ class User {
     private var major:String = ""
     private var region:String = ""
     private var keywords: List<String> = arrayListOf()
-    private var bios: List<String> = arrayListOf()
 
 
 
@@ -24,8 +26,7 @@ class User {
                 depart: String,
                 region: String,
                 major: String,
-                keywords: List<String>,
-                bios: List<String>)
+                keywords: List<String> )
     {
         this.username = username
         this.fullname = fullname
@@ -35,7 +36,7 @@ class User {
         this.major = major
         this.depart = depart
         this.keywords = keywords
-        this.bios = bios
+
     }
 
     fun getUsername(): String {
@@ -73,8 +74,36 @@ class User {
         return keywords
     }
 
-    fun getBios(): List<String> {
-        return bios
+
+
+}
+
+class Bio {
+    private var date: Date = Date()
+    private var bio: String = ""
+
+    constructor()
+
+    constructor(
+             date: Date,
+             bio: String
+    ){
+        this.date = date
+        this.bio = bio
+
+
+
+
+    }
+
+    fun getDate():Date{
+        return date
+
+
+    }
+
+    fun getBio(): String{
+        return bio
     }
 
 

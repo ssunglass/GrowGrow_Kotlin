@@ -92,7 +92,9 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+
+
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -209,6 +211,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/top_bio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
@@ -232,17 +235,22 @@
 
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_bio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp">
 
-
-
-
+            </androidx.recyclerview.widget.RecyclerView>
 
 
         </LinearLayout>
 
 
 
-    </ScrollView>
+
+
+    </androidx.core.widget.NestedScrollView>
 
 
 
