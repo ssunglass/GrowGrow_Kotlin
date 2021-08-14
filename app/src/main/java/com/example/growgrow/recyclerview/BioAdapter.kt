@@ -28,6 +28,10 @@ class BioAdapter(
 
     override fun onBindViewHolder(holder: BioAdapter.MyViewHolder, position: Int) {
 
+        val user : User = bioList[position]
+        holder.date.text = user.getDate()
+        holder.description.text  = user.getDescription()
+
 
 
     }
@@ -42,6 +46,8 @@ class BioAdapter(
 
     public class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
+        val date : TextView = itemView.findViewById(R.id.date_bio)
+        val description : TextView = itemView.findViewById(R.id.description_bio)
 
 
 
