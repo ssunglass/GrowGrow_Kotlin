@@ -133,7 +133,9 @@ class HomeFragment : Fragment() {
 
                             if (dc.type == DocumentChange.Type.ADDED) {
 
-                                userArrayList.add(dc.document.toObject(User::class.java))
+                                val data = dc.document.toObject(User::class.java)
+
+                                userArrayList.add(data)
 
                             }
 

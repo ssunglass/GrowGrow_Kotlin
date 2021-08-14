@@ -12,6 +12,8 @@ class User {
     private var depart:String = ""
     private var major:String = ""
     private var region:String = ""
+    private var date: String = ""
+    private var description: String = ""
     private var keywords: List<String> = arrayListOf()
 
 
@@ -26,6 +28,8 @@ class User {
                 depart: String,
                 region: String,
                 major: String,
+                date: String,
+                description: String,
                 keywords: List<String> )
     {
         this.username = username
@@ -36,6 +40,8 @@ class User {
         this.major = major
         this.depart = depart
         this.keywords = keywords
+        this.date = date
+        this.description = description
 
     }
 
@@ -74,37 +80,19 @@ class User {
         return keywords
     }
 
-
-
-}
-
-class Bio {
-    private var date: Date = Date()
-    private var bio: String = ""
-
-    constructor()
-
-    constructor(
-             date: Date,
-             bio: String
-    ){
-        this.date = date
-        this.bio = bio
-
-
-
-
-    }
-
-    fun getDate():Date{
+    fun getDate():String{
         return date
 
 
     }
 
-    fun getBio(): String{
-        return bio
+    fun getDescription(): String{
+        return description
     }
 
 
+
+
+
 }
+

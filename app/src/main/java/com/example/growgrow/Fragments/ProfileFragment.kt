@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.Model.User
@@ -16,6 +17,7 @@ import com.example.growgrow.databinding.FragmentProfileBinding
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import java.time.Year
 import java.util.*
 
 
@@ -33,6 +35,8 @@ class ProfileFragment : Fragment() {
     private lateinit var userId: String
     private lateinit var userRef: DocumentReference
     private lateinit var keyword: String
+    private lateinit var description: String
+    private lateinit var date: String
     private lateinit var keywords: List<String>
 
 
@@ -231,6 +235,51 @@ class ProfileFragment : Fragment() {
 
 
 
+
+
+
+
+            }
+            binding.addBioBtn.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val builder = AlertDialog.Builder(requireContext())
+                val dialogView = layoutInflater.inflate(R.layout.bio_dialog, null)
+                val bioText = dialogView.findViewById<EditText>(R.id.bio_input)
+                val yearDate = dialogView.findViewById<NumberPicker>(R.id.year_picker)
+
+                yearDate.wrapSelectorWheel = false
+
+                yearDate.minValue = 2000
+                yearDate.maxValue = year
+
+                builder.setView(dialogView)
+                        .setPositiveButton("등록", DialogInterface.OnClickListener { dialog, id ->
+
+                            description = bioText.text.toString()
+                            date = (yearDate.value).toString()
+
+                            val bio = HashMap<String, Any>()
+                            bio["date"] = date
+                            bio["description"] = description
+
+                                    db.collection("Users").document(userId)
+                                    .update("bios", FieldValue.arrayUnion(bio))
+
+
+
+                        }
+                        )
+
+                        .setNegativeButton("취소", null)
+
+                        .create()
+
+                builder.setCancelable(false)
+
+
+
+                builder.show()
 
 
 

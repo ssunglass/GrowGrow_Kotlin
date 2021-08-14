@@ -5,13 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.growgrow.Model.Bio
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import java.util.ArrayList
 
 class BioAdapter(
-        private val bioList: ArrayList<Bio>
+        private val bioList: ArrayList<User>
 ) : RecyclerView.Adapter<BioAdapter.MyViewHolder>(){
 
 

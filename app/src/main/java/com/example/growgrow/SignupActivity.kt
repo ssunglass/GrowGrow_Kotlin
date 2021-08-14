@@ -95,6 +95,11 @@ class SignupActivity : AppCompatActivity() {
         val currentUserId = FirebaseAuth.getInstance().currentUser!!.uid
         val db = Firebase.firestore
 
+        val bio = HashMap<String, Any>()
+        bio["date"] = "2012"
+        bio["description"] = "Test"
+
+
         val user = HashMap<String, Any>()
         user["uid"] = currentUserId
         user["fullname"] = fullname
@@ -105,6 +110,9 @@ class SignupActivity : AppCompatActivity() {
         user["major"] = "전공"
         user["region"] = "지역"
         user["keywords"] = arrayListOf("예시)sksunny", "예시)샘이랑")
+        user["bios"] = arrayListOf(bio)
+
+
 
         db.collection("Users").document(currentUserId).set(user)
                 .addOnCompleteListener { task ->

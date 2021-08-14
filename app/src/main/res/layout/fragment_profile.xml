@@ -185,14 +185,31 @@
                     android:layout_marginBottom="20dp"
                     />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+
+
                 <Button
                     android:id="@+id/add_keyword_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="키워드 추가"
                     android:layout_marginRight="15dp"
-                    android:layout_gravity="center"
                     />
+
+                    <Button
+                        android:id="@+id/add_bio_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="바이오 추가"
+
+                        />
+
+                </LinearLayout>
 
 
 
