@@ -240,6 +240,7 @@ class ProfileFragment : Fragment() {
 
 
             }
+
             binding.addBioBtn.setOnClickListener {
                 val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
