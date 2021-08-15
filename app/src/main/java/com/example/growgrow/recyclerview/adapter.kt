@@ -15,7 +15,6 @@ import java.lang.reflect.Array
 import java.util.ArrayList
 
 class UserAdapter(
-        private var mContext: Context,
         private val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdapter.MyViewHolder>(){
 
 

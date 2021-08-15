@@ -30,7 +30,8 @@ class User {
                 major: String,
                 date: String,
                 description: String,
-                keywords: List<String> )
+                keywords: List<String>,
+               )
     {
         this.username = username
         this.fullname = fullname
@@ -42,6 +43,7 @@ class User {
         this.keywords = keywords
         this.date = date
         this.description = description
+
 
     }
 
@@ -80,6 +82,42 @@ class User {
         return keywords
     }
 
+   /* fun getDate():String{
+        return date
+
+
+    }
+
+    fun getDescription(): String{
+        return description
+    }
+
+    */
+
+
+
+
+
+
+
+}
+
+/* class Bio {
+
+    private var date: String = ""
+    private var description: String = ""
+
+    constructor()
+
+    constructor(
+            date: String,
+            description: String,
+    ){
+
+        this.date = date
+        this.description = description
+    }
+
     fun getDate():String{
         return date
 
@@ -93,6 +131,8 @@ class User {
 
 
 
-
 }
+
+ */
+
 

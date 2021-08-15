@@ -9,8 +9,8 @@ import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import java.util.ArrayList
 
-class BioAdapter(
-        private val bioList: ArrayList<User>
+/* class BioAdapter(
+        private val bioList: ArrayList<Map<String,String>>
 ) : RecyclerView.Adapter<BioAdapter.MyViewHolder>(){
 
 
@@ -28,9 +28,7 @@ class BioAdapter(
 
     override fun onBindViewHolder(holder: BioAdapter.MyViewHolder, position: Int) {
 
-        val user : User = bioList[position]
-        holder.date.text = user.getDate()
-        holder.description.text  = user.getDescription()
+
 
 
 
@@ -54,3 +52,5 @@ class BioAdapter(
 
     }
 }
+
+ */

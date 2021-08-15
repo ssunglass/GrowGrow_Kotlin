@@ -4,19 +4,24 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentProfileBinding
+import com.example.growgrow.recyclerview.UserAdapter
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.EventListener
 import java.time.Year
 import java.util.*
 
@@ -30,6 +35,9 @@ import java.util.*
  * create an instance of this fragment.
  */
 class ProfileFragment : Fragment() {
+  //  private lateinit var recyclerView : RecyclerView
+ //   private lateinit var bioArrayList : ArrayList<Map<String,String>>
+  //  private lateinit var myAdapter : BioAdapter
     private lateinit var db : FirebaseFirestore
     private lateinit var auth : FirebaseAuth
     private lateinit var userId: String
@@ -54,6 +62,19 @@ class ProfileFragment : Fragment() {
             auth = FirebaseAuth.getInstance()
             userId = auth.currentUser?.uid.toString()
             userRef = db.collection("Users").document(userId)
+
+
+           /* recyclerView = binding.recyclerViewBio
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            bioArrayList = arrayListOf()
+            myAdapter = BioAdapter(bioArrayList)
+
+            */
+
+
+        //    recyclerView.adapter = myAdapter
+
+
 
             val userRef = FirebaseFirestore.getInstance().collection("Users").document(userId)
 
@@ -265,7 +286,7 @@ class ProfileFragment : Fragment() {
                             bio["description"] = description
 
                                     db.collection("Users").document(userId)
-                                    .update("bios", FieldValue.arrayUnion(bio))
+                                    .collection("Bios").add(bio)
 
 
 
@@ -287,7 +308,7 @@ class ProfileFragment : Fragment() {
 
             }
 
-
+          //  EventChangeListener()
 
 
             return fragmentProfileBinding!!.root
@@ -298,6 +319,48 @@ class ProfileFragment : Fragment() {
             fragmentProfileBinding = null
             super.onDestroyView()
         }
+
+   /* private fun EventChangeListener(){
+
+        db = FirebaseFirestore.getInstance()
+        userRef.get().addOnSuccessListener {  document ->
+
+            if (document != null) {
+
+            val bio = document.toObject<User>(User::class.java)
+
+                if(bio != null) {
+
+                    bios = bio.getBios()
+
+                    for(data in bios) {
+
+
+                        bioArrayList.add(data)
+
+
+                    }
+
+
+
+
+
+
+                }                }
+
+
+
+
+
+
+        }
+
+
+
+
+    }
+
+    */
 
 
 
