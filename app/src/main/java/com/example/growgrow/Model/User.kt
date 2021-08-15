@@ -102,7 +102,7 @@ class User {
 
 }
 
-/* class Bio {
+ class Bio {
 
     private var date: String = ""
     private var description: String = ""
@@ -133,6 +133,6 @@ class User {
 
 }
 
- */
+
 
 

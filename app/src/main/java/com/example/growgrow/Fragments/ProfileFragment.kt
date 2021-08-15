@@ -14,9 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.EditProfileActivity
+import com.example.growgrow.Model.Bio
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import com.example.growgrow.databinding.FragmentProfileBinding
+import com.example.growgrow.recyclerview.BioAdapter
 import com.example.growgrow.recyclerview.UserAdapter
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
@@ -35,9 +37,9 @@ import java.util.*
  * create an instance of this fragment.
  */
 class ProfileFragment : Fragment() {
-  //  private lateinit var recyclerView : RecyclerView
- //   private lateinit var bioArrayList : ArrayList<Map<String,String>>
-  //  private lateinit var myAdapter : BioAdapter
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var bioArrayList : ArrayList<Bio>
+    private lateinit var myAdapter : BioAdapter
     private lateinit var db : FirebaseFirestore
     private lateinit var auth : FirebaseAuth
     private lateinit var userId: String
@@ -64,15 +66,12 @@ class ProfileFragment : Fragment() {
             userRef = db.collection("Users").document(userId)
 
 
-           /* recyclerView = binding.recyclerViewBio
+            recyclerView = binding.recyclerViewBio
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             bioArrayList = arrayListOf()
             myAdapter = BioAdapter(bioArrayList)
 
-            */
-
-
-        //    recyclerView.adapter = myAdapter
+            recyclerView.adapter = myAdapter
 
 
 
@@ -308,7 +307,7 @@ class ProfileFragment : Fragment() {
 
             }
 
-          //  EventChangeListener()
+            EventChangeListener()
 
 
             return fragmentProfileBinding!!.root
@@ -320,47 +319,47 @@ class ProfileFragment : Fragment() {
             super.onDestroyView()
         }
 
-   /* private fun EventChangeListener(){
+   private fun EventChangeListener(){
 
-        db = FirebaseFirestore.getInstance()
-        userRef.get().addOnSuccessListener {  document ->
+       db = FirebaseFirestore.getInstance()
+       db.collection("Users").document(userId).collection("Bios").orderBy("date")
+               .addSnapshotListener(object : EventListener<QuerySnapshot> {
 
-            if (document != null) {
+                   override fun onEvent(
+                           value: QuerySnapshot?,
+                           error: FirebaseFirestoreException?) {
 
-            val bio = document.toObject<User>(User::class.java)
+                       if (error != null) {
+                           Log.e("FireStore Error", error.message.toString())
+                           return
 
-                if(bio != null) {
+                       }
 
-                    bios = bio.getBios()
+                       for (dc: DocumentChange in value?.documentChanges!!) {
 
-                    for(data in bios) {
+                           if (dc.type == DocumentChange.Type.ADDED) {
 
+                               val data = dc.document.toObject(Bio::class.java)
 
-                        bioArrayList.add(data)
+                               bioArrayList.add(data)
 
+                           }
 
-                    }
+                       }
 
+                       myAdapter.notifyDataSetChanged()
 
-
-
-
-
-                }                }
-
-
-
+                   }
 
 
-
-        }
+               })
 
 
 
 
     }
 
-    */
+
 
 
 

@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.growgrow.Model.Bio
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import java.util.ArrayList
 
-/* class BioAdapter(
-        private val bioList: ArrayList<Map<String,String>>
+ class BioAdapter(
+        private val bioList: ArrayList<Bio>
 ) : RecyclerView.Adapter<BioAdapter.MyViewHolder>(){
 
 
@@ -20,13 +21,17 @@ import java.util.ArrayList
         val itemView = LayoutInflater.from(parent.context).inflate(
                 R.layout.bio_item, parent,false)
 
-        return BioAdapter.MyViewHolder(itemView)
+        return MyViewHolder(itemView)
 
 
 
     }
 
     override fun onBindViewHolder(holder: BioAdapter.MyViewHolder, position: Int) {
+
+        val bio : Bio = bioList[position]
+        holder.date.text = bio.getDate()
+        holder.description.text = bio.getDescription()
 
 
 
@@ -53,4 +58,3 @@ import java.util.ArrayList
     }
 }
 
- */
