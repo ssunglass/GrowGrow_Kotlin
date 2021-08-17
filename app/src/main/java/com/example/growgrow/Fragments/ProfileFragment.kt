@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,7 @@ import java.util.*
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
     private lateinit var recyclerView : RecyclerView
     private lateinit var bioArrayList : ArrayList<Bio>
     private lateinit var myAdapter : BioAdapter
@@ -69,7 +70,36 @@ class ProfileFragment : Fragment() {
             recyclerView = binding.recyclerViewBio
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             bioArrayList = arrayListOf()
-            myAdapter = BioAdapter(bioArrayList)
+            myAdapter = BioAdapter(bioArrayList, this@ProfileFragment)
+
+
+
+       /*     myAdapter.setOnClickListener(View.OnClickListener { v->
+                val builder = AlertDialog.Builder(context)
+                val dialogView = layoutInflater.inflate(R.layout.bio_update_dialog, null)
+                val dialogText = dialogView.findViewById<EditText>(R.id.dialog_update)
+
+                builder.setView(dialogView)
+                        .setPositiveButton("등록", DialogInterface.OnClickListener { dialog, id ->
+
+
+
+                        }
+                        )
+
+                        .setNegativeButton("취소", null)
+
+                        .create()
+
+                builder.setCancelable(false)
+
+
+
+                builder.show()
+            }
+            )
+
+        */
 
             recyclerView.adapter = myAdapter
 
@@ -285,7 +315,7 @@ class ProfileFragment : Fragment() {
                             bio["description"] = description
 
                                     db.collection("Users").document(userId)
-                                    .collection("Bios").add(bio)
+                                    .collection("Bios").document(date).set(bio)
 
 
 
@@ -306,6 +336,7 @@ class ProfileFragment : Fragment() {
 
 
             }
+
 
             EventChangeListener()
 
@@ -360,16 +391,6 @@ class ProfileFragment : Fragment() {
     }
 
 
-
-
-
-
-
-
-
-
-
-
         companion object {
             /**
              * Use this factory method to create a new instance of
@@ -381,6 +402,47 @@ class ProfileFragment : Fragment() {
              */
 
         }
+
+    override fun onClick(position: Int) {
+
+        val builder = AlertDialog.Builder(context)
+        val dialogView = layoutInflater.inflate(R.layout.bio_update_dialog, null)
+        val dialogText = dialogView.findViewById<EditText>(R.id.dialog_update)
+        db = FirebaseFirestore.getInstance()
+
+        dialogText.setText(bioArrayList[position].getDescription())
+
+
+        builder.setView(dialogView)
+                .setPositiveButton("업데이트", DialogInterface.OnClickListener { dialog, id ->
+
+                    db.collection("Users").document(userId).collection("Bios")
+                            .document(bioArrayList[position].getDate()).update("description", dialogText.text.toString())
+
+
+
+                    bioArrayList.clear()
+                    EventChangeListener()
+
+
+
+
+                }
+                )
+
+                .setNegativeButton("취소", null)
+
+                .create()
+
+        builder.setCancelable(false)
+
+
+
+        builder.show()
+
+
+
+    }
 
 }
 
