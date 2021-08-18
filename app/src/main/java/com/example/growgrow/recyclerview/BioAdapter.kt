@@ -57,6 +57,15 @@ import java.util.ArrayList
          fun onClick(position: Int)
      }
 
+     fun deleteItem(i: Int){
+
+         bioList.removeAt(i)
+         notifyDataSetChanged()
+
+
+
+     }
+
     /* fun setOnClickListener(listener: View.OnClickListener) {
          this.listener = listener
      }

@@ -12,12 +12,14 @@ import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.Model.Bio
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
+import com.example.growgrow.SwipeGesture
 import com.example.growgrow.databinding.FragmentProfileBinding
 import com.example.growgrow.recyclerview.BioAdapter
 import com.example.growgrow.recyclerview.UserAdapter
@@ -51,6 +53,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
     private lateinit var keywords: List<String>
 
 
+
     private var fragmentProfileBinding: FragmentProfileBinding? = null
 
         override fun onCreateView(
@@ -73,35 +76,39 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
             myAdapter = BioAdapter(bioArrayList, this@ProfileFragment)
 
 
+            recyclerView.adapter = myAdapter
 
-       /*     myAdapter.setOnClickListener(View.OnClickListener { v->
-                val builder = AlertDialog.Builder(context)
-                val dialogView = layoutInflater.inflate(R.layout.bio_update_dialog, null)
-                val dialogText = dialogView.findViewById<EditText>(R.id.dialog_update)
+            val swipeGesture = object : SwipeGesture(requireContext()){
 
-                builder.setView(dialogView)
-                        .setPositiveButton("등록", DialogInterface.OnClickListener { dialog, id ->
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                    when(direction) {
+                        ItemTouchHelper.LEFT -> {
+
+                            userRef
+                                .collection("Bios")
+                                .document(bioArrayList[viewHolder.adapterPosition].getDate())
+                                .delete()
+
+
+                            myAdapter.deleteItem(viewHolder.adapterPosition)
+
+
 
 
 
                         }
-                        )
 
-                        .setNegativeButton("취소", null)
-
-                        .create()
-
-                builder.setCancelable(false)
+                    }
 
 
-
-                builder.show()
+                }
             }
-            )
 
-        */
+            val touchHelper = ItemTouchHelper(swipeGesture)
+            touchHelper.attachToRecyclerView(recyclerView)
 
-            recyclerView.adapter = myAdapter
+
 
 
 
@@ -168,6 +175,13 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
 
             }
+
+
+            EventChangeListener()
+
+
+
+
 
            /* userRef.addSnapshotListener(object: EventListener<DocumentSnapshot>{
 
@@ -307,6 +321,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                 builder.setView(dialogView)
                         .setPositiveButton("등록", DialogInterface.OnClickListener { dialog, id ->
 
+
                             description = bioText.text.toString()
                             date = (yearDate.value).toString()
 
@@ -316,6 +331,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                                     db.collection("Users").document(userId)
                                     .collection("Bios").document(date).set(bio)
+
+
 
 
 
@@ -338,8 +355,6 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
             }
 
 
-            EventChangeListener()
-
 
             return fragmentProfileBinding!!.root
         }
@@ -351,6 +366,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
         }
 
    private fun EventChangeListener(){
+
+
 
        db = FirebaseFirestore.getInstance()
        db.collection("Users").document(userId).collection("Bios").orderBy("date")
@@ -368,9 +385,10 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                        for (dc: DocumentChange in value?.documentChanges!!) {
 
-                           if (dc.type == DocumentChange.Type.ADDED) {
+                           if (dc.type == DocumentChange.Type.ADDED ) {
 
                                val data = dc.document.toObject(Bio::class.java)
+
 
                                bioArrayList.add(data)
 
@@ -389,6 +407,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
 
     }
+
+
 
 
         companion object {
