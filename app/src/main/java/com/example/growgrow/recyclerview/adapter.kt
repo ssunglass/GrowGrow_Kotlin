@@ -15,7 +15,8 @@ import java.lang.reflect.Array
 import java.util.ArrayList
 
 class UserAdapter(
-        private val userList: ArrayList<User>) : RecyclerView.Adapter<UserAdapter.MyViewHolder>(){
+        private val userList: ArrayList<User>,
+        val listener: UserOnClickListener) : RecyclerView.Adapter<UserAdapter.MyViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.MyViewHolder {
@@ -48,11 +49,15 @@ class UserAdapter(
 
     }
 
+    interface UserOnClickListener{
+        fun onClick(position: Int)
+    }
+
     override fun getItemCount(): Int {
         return userList.size
     }
 
-    public class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    inner class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
 
         val fullName : TextView = itemView.findViewById(R.id.fullname_textview)
         val userName : TextView = itemView.findViewById(R.id.username_textview)
@@ -60,6 +65,13 @@ class UserAdapter(
         val major : TextView = itemView.findViewById(R.id.major_textview)
         val summary : TextView = itemView.findViewById(R.id.summary_testview)
 
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                listener.onClick(position)
+            }
+        }
 
 
     }

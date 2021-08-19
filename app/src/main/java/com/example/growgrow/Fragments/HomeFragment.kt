@@ -2,6 +2,7 @@ package com.example.growgrow.Fragments
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,9 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.MainActivity
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
+import com.example.growgrow.ShowProfileActivity
 import com.example.growgrow.databinding.FragmentHomeBinding
 import com.example.growgrow.databinding.FragmentProfileBinding
 import com.example.growgrow.recyclerview.UserAdapter
@@ -34,7 +37,7 @@ import com.google.firebase.firestore.*
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
 
     private lateinit var recyclerView : RecyclerView
     private lateinit var cardview: CardView
@@ -78,7 +81,7 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = staggeredGridLayoutManager //LinearLayoutManager(requireContext())
        // recyclerView.setHasFixedSize(true)
         userArrayList = arrayListOf()
-        myAdapter = UserAdapter(userArrayList)
+        myAdapter = UserAdapter(userArrayList, this@HomeFragment)
 
         recyclerView.adapter = myAdapter
 
@@ -187,5 +190,9 @@ class HomeFragment : Fragment() {
          * @return A new instance of fragment HomeFragment.
          */
 
+    }
+
+    override fun onClick(position: Int) {
+        startActivity(Intent(context, ShowProfileActivity::class.java))
     }
 }
