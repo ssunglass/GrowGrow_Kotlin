@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.growgrow.AddBioActivity
 import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.Model.Bio
 import com.example.growgrow.Model.User
@@ -306,7 +307,11 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
             }
 
             binding.addBioBtn.setOnClickListener {
-                val calendar = Calendar.getInstance()
+
+                startActivity(Intent(context, AddBioActivity::class.java))
+
+
+                /*val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
                 val builder = AlertDialog.Builder(requireContext())
                 val dialogView = layoutInflater.inflate(R.layout.bio_dialog, null)
@@ -348,6 +353,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
 
                 builder.show()
+
+                */
 
 
 
