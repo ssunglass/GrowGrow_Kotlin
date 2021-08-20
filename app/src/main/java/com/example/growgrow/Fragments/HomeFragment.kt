@@ -193,6 +193,9 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
     }
 
     override fun onClick(position: Int) {
-        startActivity(Intent(context, ShowProfileActivity::class.java))
+        val intent = Intent(context, ShowProfileActivity::class.java)
+        val uid = userArrayList[position].getUid()
+        intent.putExtra("profileId", uid)
+        startActivity(intent)
     }
 }
