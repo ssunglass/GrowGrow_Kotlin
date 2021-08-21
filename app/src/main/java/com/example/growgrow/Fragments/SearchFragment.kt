@@ -1,16 +1,22 @@
 package com.example.growgrow.Fragments
 
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.example.growgrow.R
+import com.example.growgrow.databinding.ActivityEditProfileBinding
+import com.example.growgrow.databinding.FragmentProfileBinding
+import com.example.growgrow.databinding.FragmentSearchBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -18,23 +24,72 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class SearchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+
+
+        setupSpinnerRegion()
+        setupSpinnerHandler()
+
+        binding.expandableBtn.setOnClickListener {
+
+            if(binding.expandableLayout.visibility == View.GONE) {
+               TransitionManager.beginDelayedTransition(binding.beginLayout, AutoTransition())
+                binding.expandableLayout.visibility = View.VISIBLE
+                binding.expandableBtn.text = "키워드 검색"
+
+            } else {
+
+                TransitionManager.beginDelayedTransition(binding.beginLayout, AutoTransition())
+                binding.expandableLayout.visibility = View.GONE
+                binding.expandableBtn.text = "키워드 필터"
+
+
+            }
+            }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        return binding!!.root
+
+
     }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
+    private fun setupSpinnerRegion(){
+        val region = resources.getStringArray(R.array.region_array)
+        val adapter = ArrayAdapter(requireContext() , R.layout.support_simple_spinner_dropdown_item, region)
+
+        binding.regionFilterSpinner.adapter = adapter
+
+    }
+
+    private fun setupSpinnerHandler() {
+        binding.regionFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
+
+
+        }
+
+
+
 
     companion object {
         /**
@@ -46,13 +101,6 @@ class SearchFragment : Fragment() {
          * @return A new instance of fragment SearchFragment.
          */
         // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                SearchFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+
     }
 }

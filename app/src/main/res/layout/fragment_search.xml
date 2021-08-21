@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".Fragments.SearchFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -34,6 +36,156 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/begin_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="키워드 검색"/>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        app:queryHint="샘이랑을 검색해보세요"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        app:searchIcon="@null"
+        android:searchHintIcon="@null"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/border_shape"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="2dp"
+        android:background="#bebebe"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/expandable_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="키워드 필터"
+        android:backgroundTint="@color/colorBlack"/>
+
+    <LinearLayout
+        android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="계열"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="인문"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="사회"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="공학"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="자연"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="교육"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="의약"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="예체능"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="기타"/>
+
+
+
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="2dp"
+            android:background="#bebebe"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지역"/>
+
+        <Spinner
+            android:id="@+id/region_filter_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/border_shape"/>
+
+
+
+    </LinearLayout>
+</LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_search"
         android:layout_width="match_parent"
@@ -45,4 +197,4 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>
