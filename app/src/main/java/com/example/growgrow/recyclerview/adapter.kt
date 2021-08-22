@@ -68,7 +68,7 @@ class UserAdapter(
 
         init {
             itemView.setOnClickListener {
-                val position = adapterPosition
+                val position = bindingAdapterPosition
                 listener.onClick(position)
             }
         }

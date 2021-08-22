@@ -54,18 +54,20 @@
         android:layout_height="wrap_content"
         android:text="키워드 검색"/>
 
-    <androidx.appcompat.widget.SearchView
+
+    <EditText
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:iconifiedByDefault="false"
-        app:queryHint="샘이랑을 검색해보세요"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        app:searchIcon="@null"
-        android:searchHintIcon="@null"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/border_shape"/>
+        android:background="@drawable/border_shape"
+        android:hint="샘이랑을 검색해보세요"
+        android:padding="5dp"
+        android:inputType="text"
+        android:imeOptions="actionSearch"/>
+
 
     <View
         android:layout_width="match_parent"
