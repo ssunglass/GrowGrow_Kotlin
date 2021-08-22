@@ -1,5 +1,6 @@
 package com.example.growgrow.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
+import com.example.growgrow.ShowProfileActivity
 import com.example.growgrow.databinding.FragmentSearchBinding
 import com.example.growgrow.recyclerview.SearchAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -65,6 +67,7 @@ class SearchFragment : Fragment() {
         recyclerView.adapter = myAdapter
 
 
+
         binding.searchBar.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -75,6 +78,28 @@ class SearchFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+
+
+                if(s.toString().isEmpty()) {
+
+                    query = db.collection("Users")
+
+
+                } else {
+                    query = db.collection("Users")
+                        .whereArrayContains("keywords", s.toString())
+                        
+
+                }
+
+
+                options  = FirestoreRecyclerOptions.Builder<User>()
+                    .setQuery(query, User::class.java)
+                    .build()
+
+                myAdapter.updateOptions(options)
+                myAdapter.notifyDataSetChanged()
+
 
             }
 
@@ -124,7 +149,7 @@ class SearchFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        myAdapter.startListening()
+        myAdapter.stopListening()
 
     }
 
@@ -173,6 +198,15 @@ class SearchFragment : Fragment() {
 
     }
 
+  /*  override fun onItemClick(position: Int) {
+        val intent = Intent(context, ShowProfileActivity::class.java)
+        val uid = myAdapter.getItem(position).getUid()
+        intent.putExtra("profileId", uid)
+        startActivity(intent)
+    }
+
+
+   */
 
 }
 

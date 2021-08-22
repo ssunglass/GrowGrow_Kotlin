@@ -1,10 +1,14 @@
 package com.example.growgrow.recyclerview
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.growgrow.EditProfileActivity
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -50,12 +54,7 @@ class SearchAdapter : FirestoreRecyclerAdapter<User, SearchAdapter.SearchViewHol
         holder.major.text = model.getMajor()
         holder.summary.text = model.getSummary()
 
-        if (listener != null) {
-            holder.itemView.setOnClickListener(View.OnClickListener {
-                listener.onItemClick(holder.bindingAdapterPosition)
-            })
 
-        }
     }
 
 
@@ -73,6 +72,18 @@ class SearchAdapter : FirestoreRecyclerAdapter<User, SearchAdapter.SearchViewHol
             major = itemView.findViewById(R.id.major_textview)
             depart = itemView.findViewById(R.id.depart_textview)
             summary = itemView.findViewById(R.id.summary_testview)
+
+
+            if(listener!=null) {
+
+            itemView.setOnClickListener{
+                val position = bindingAdapterPosition
+                    listener.onItemClick(position)
+
+            }
+
+
+            }
         }
     }
 
