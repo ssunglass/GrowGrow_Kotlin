@@ -1,11 +1,13 @@
 package com.example.growgrow.Fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +36,7 @@ import java.util.*
  * Use the [SearchFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -55,7 +57,11 @@ class SearchFragment : Fragment() {
 
         db = FirebaseFirestore.getInstance()
         recyclerView = binding.recyclerViewSearch
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val linearLayoutManagerWrapepr = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+
+
+        recyclerView.layoutManager = linearLayoutManagerWrapepr //LinearLayoutManager(requireContext())
 
         query = db.collection("Users")
         options  = FirestoreRecyclerOptions.Builder<User>()
@@ -63,7 +69,7 @@ class SearchFragment : Fragment() {
             .build()
 
 
-        myAdapter = SearchAdapter(options)
+        myAdapter = SearchAdapter(options  ,this@SearchFragment)
         recyclerView.adapter = myAdapter
 
 
@@ -96,6 +102,7 @@ class SearchFragment : Fragment() {
                 options  = FirestoreRecyclerOptions.Builder<User>()
                     .setQuery(query, User::class.java)
                     .build()
+
 
                 myAdapter.updateOptions(options)
                 myAdapter.notifyDataSetChanged()
@@ -198,16 +205,34 @@ class SearchFragment : Fragment() {
 
     }
 
-  /*  override fun onItemClick(position: Int) {
+    override fun onItemClick(position: Int) {
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
         val intent = Intent(context, ShowProfileActivity::class.java)
         val uid = myAdapter.getItem(position).getUid()
         intent.putExtra("profileId", uid)
         startActivity(intent)
+
     }
 
+    /*  override fun onItemClick(position: Int) {
+          val intent = Intent(context, ShowProfileActivity::class.java)
+          val uid = myAdapter.getItem(position).getUid()
+          intent.putExtra("profileId", uid)
+          startActivity(intent)
+      }
 
-   */
+
+     */
 
 }
+
+class LinearLayoutManagerWrapper: LinearLayoutManager {
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context, orientation: Int, reverseLayout: Boolean) : super(context, orientation, reverseLayout) {}
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {}
+    override fun supportsPredictiveItemAnimations(): Boolean { return false }
+}
+
+
 
 

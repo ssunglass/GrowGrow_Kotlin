@@ -34,13 +34,17 @@ class SearchAdapter : FirestoreRecyclerAdapter<User, SearchAdapter.SearchViewHol
        private val listener: OnItemClickListener?
 
 
-      internal constructor(options: FirestoreRecyclerOptions<User?>?, listener: OnItemClickListener?) : super(options!!) {
+      internal constructor(options: FirestoreRecyclerOptions<User>, listener: OnItemClickListener?) : super(options!!) {
            this.listener = listener
        }
 
-       internal constructor(options: FirestoreRecyclerOptions<User>) : super(options!!) {
+   /*    internal constructor(options: FirestoreRecyclerOptions<User>) : super(options!!) {
            listener = null
        }
+
+
+    */
+
 
 
 
