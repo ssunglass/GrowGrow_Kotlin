@@ -126,7 +126,12 @@ class EditProfileActivity : AppCompatActivity() {
         binding.regionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
-               binding.selectedRegion.text = binding.regionSpinner.getItemAtPosition(position).toString()
+                val currentItem = binding.regionSpinner.getItemAtPosition(position)
+                if(!currentItem.equals("지역")){
+                    binding.selectedRegion.text = currentItem.toString()
+                }
+
+
 
             }
 
@@ -137,7 +142,14 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.departSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                binding.selectedDepart.text = binding.departSpinner.getItemAtPosition(position).toString()
+
+                val currentItem = binding.departSpinner.getItemAtPosition(position)
+
+
+                if( !currentItem.equals("계열")){
+                    binding.selectedDepart.text = currentItem.toString()
+                }
+
 
 
             }

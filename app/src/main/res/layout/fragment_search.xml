@@ -177,8 +177,13 @@
             android:id="@+id/region_filter_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
             android:background="@drawable/border_shape"/>
+
+        <TextView
+            android:id="@+id/filtered_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
 
 

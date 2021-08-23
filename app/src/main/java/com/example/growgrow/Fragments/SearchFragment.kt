@@ -45,6 +45,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     private lateinit var recyclerView : RecyclerView
     private lateinit var query: Query
     private lateinit var options: FirestoreRecyclerOptions<User>
+    private lateinit var filterRegion: String
 
 
     override fun onCreateView(
@@ -59,6 +60,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
         recyclerView = binding.recyclerViewSearch
         val linearLayoutManagerWrapepr = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        filterRegion = binding.filteredRegion.text.toString()
 
 
         recyclerView.layoutManager = linearLayoutManagerWrapepr //LinearLayoutManager(requireContext())
@@ -175,6 +177,16 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     private fun setupSpinnerHandler() {
         binding.regionFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+
+                val currentItem = binding.regionFilterSpinner.getItemAtPosition(position)
+
+                if(!currentItem.equals("지역")) {
+
+                    binding.filteredRegion.text = currentItem.toString()
+
+
+                }
+
 
 
             }
