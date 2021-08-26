@@ -25,6 +25,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,6 +47,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
     private lateinit var query: Query
     private lateinit var options: FirestoreRecyclerOptions<User>
     private lateinit var filterRegion: String
+    private lateinit var selectedChips: ArrayList<String>
 
 
     override fun onCreateView(
@@ -60,8 +62,6 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
         recyclerView = binding.recyclerViewSearch
         val linearLayoutManagerWrapepr = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        filterRegion = binding.filteredRegion.text.toString()
-
 
         recyclerView.layoutManager = linearLayoutManagerWrapepr //LinearLayoutManager(requireContext())
 
@@ -75,6 +75,21 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
         recyclerView.adapter = myAdapter
 
 
+        binding.initConditionChip.setOnClickListener {
+            filterRegion = binding.filteredRegion.text.toString()
+
+            query = db.collection("Users").whereEqualTo("region", filterRegion)
+
+
+            options  = FirestoreRecyclerOptions.Builder<User>()
+                    .setQuery(query, User::class.java)
+                    .build()
+
+
+            myAdapter.updateOptions(options)
+            myAdapter.notifyDataSetChanged()
+
+        }
 
         binding.searchBar.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -87,23 +102,50 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
             override fun afterTextChanged(s: Editable?) {
 
+                val searchText = s.toString()
 
-                if(s.toString().isEmpty()) {
+                when{
+                    searchText.isEmpty() && filterRegion.isEmpty()->  query = db.collection("Users")
+                    searchText.isEmpty() && filterRegion.isNotEmpty() -> query = db.collection("Users").whereEqualTo("region", filterRegion)
+                    searchText.isNotEmpty() && filterRegion.isEmpty() -> query = db.collection("Users") .whereArrayContains("keywords", searchText)
 
-                    query = db.collection("Users")
+                    else -> {
+
+                        query = db.collection("Users")
+                                .whereArrayContains("keywords", searchText)
+                                .whereEqualTo("region", filterRegion)
+                                
+
+
+                    }
+
+
+                }
+
+
+
+
+               /* if(s.toString().isEmpty()) {
+
+                    query = db.collection("Users").whereEqualTo("region", filterRegion)
 
 
                 } else {
                     query = db.collection("Users")
-                        .whereArrayContains("keywords", s.toString())
+                        .whereArrayContains("keywords", s.toString()).whereEqualTo("region", filterRegion)
                         
 
                 }
+
+                */
+
+
 
 
                 options  = FirestoreRecyclerOptions.Builder<User>()
                     .setQuery(query, User::class.java)
                     .build()
+
 
 
                 myAdapter.updateOptions(options)

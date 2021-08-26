@@ -78,7 +78,6 @@ class SignupActivity : AppCompatActivity() {
                                 val message = task.exception!!.toString()
                                 Toast.makeText(this,"Error: $message",Toast.LENGTH_LONG).show()
 
-
                             }
 
                             }

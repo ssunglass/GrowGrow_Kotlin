@@ -55,6 +55,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
 
 
+
     private var fragmentProfileBinding: FragmentProfileBinding? = null
 
         override fun onCreateView(

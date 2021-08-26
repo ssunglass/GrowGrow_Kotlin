@@ -47,6 +47,7 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
     private lateinit var auth : FirebaseAuth
     private lateinit var uid: String
 
+
    // private lateinit var dialog: Dialog
     private lateinit var documentReference: DocumentReference
 
