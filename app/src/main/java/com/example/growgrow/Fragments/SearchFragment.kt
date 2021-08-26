@@ -85,9 +85,13 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
                     .setQuery(query, User::class.java)
                     .build()
 
+            TransitionManager.beginDelayedTransition(binding.beginLayout, AutoTransition())
+            binding.expandableLayout.visibility = View.GONE
+            binding.expandableBtn.text = "키워드 필터"
 
             myAdapter.updateOptions(options)
             myAdapter.notifyDataSetChanged()
+
 
         }
 
