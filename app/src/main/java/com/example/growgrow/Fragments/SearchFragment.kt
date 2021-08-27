@@ -110,7 +110,16 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
            */
 
-            query = db.collection("Users").whereIn("depart",selectedChips)
+            if(selectedChips.isNotEmpty()){
+
+                query = db.collection("Users").whereIn("depart",selectedChips)
+
+
+            } else {
+                query = db.collection("Users")
+            }
+
+
 
 
 
