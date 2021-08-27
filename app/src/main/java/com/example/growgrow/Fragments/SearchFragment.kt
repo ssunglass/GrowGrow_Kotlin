@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.example.growgrow.ShowProfileActivity
 import com.example.growgrow.databinding.FragmentSearchBinding
 import com.example.growgrow.recyclerview.SearchAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.material.chip.Chip
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.util.*
@@ -62,6 +64,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
         recyclerView = binding.recyclerViewSearch
         val linearLayoutManagerWrapepr = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        selectedChips = arrayListOf()
 
         recyclerView.layoutManager = linearLayoutManagerWrapepr //LinearLayoutManager(requireContext())
 
@@ -75,10 +78,45 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
         recyclerView.adapter = myAdapter
 
 
-        binding.initConditionChip.setOnClickListener {
-            filterRegion = binding.filteredRegion.text.toString()
 
-            query = db.collection("Users").whereEqualTo("region", filterRegion)
+
+
+        binding.initConditionChip.setOnClickListener {
+
+            selectedChips.clear()
+
+            binding.searchChipgroup.checkedChipIds.forEach{
+                val chip = binding.root.findViewById<Chip>(it).text.toString()
+                selectedChips.add(chip)
+            }
+
+
+
+          /*  filterRegion = binding.filteredRegion.text.toString()
+
+
+
+            query = if(filterRegion.isNotEmpty()){
+
+                db.collection("Users").whereEqualTo("region", filterRegion)
+
+
+            } else {
+
+                db.collection("Users")
+
+            }
+
+
+           */
+
+            query = db.collection("Users").whereIn("depart",selectedChips)
+
+
+
+
+
+
 
 
             options  = FirestoreRecyclerOptions.Builder<User>()
@@ -93,6 +131,8 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
             myAdapter.notifyDataSetChanged()
 
 
+
+
         }
 
         binding.searchBar.addTextChangedListener(object : TextWatcher{
@@ -105,13 +145,14 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-
+                filterRegion = binding.filteredRegion.text.toString()
                 val searchText = s.toString()
 
                 when{
                     searchText.isEmpty() && filterRegion.isEmpty()->  query = db.collection("Users")
                     searchText.isEmpty() && filterRegion.isNotEmpty() -> query = db.collection("Users").whereEqualTo("region", filterRegion)
                     searchText.isNotEmpty() && filterRegion.isEmpty() -> query = db.collection("Users") .whereArrayContains("keywords", searchText)
+
 
                     else -> {
 
@@ -229,6 +270,10 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
                 if(!currentItem.equals("지역")) {
 
                     binding.filteredRegion.text = currentItem.toString()
+
+
+                } else {
+                    binding.filteredRegion.text = ""
 
 
                 }
