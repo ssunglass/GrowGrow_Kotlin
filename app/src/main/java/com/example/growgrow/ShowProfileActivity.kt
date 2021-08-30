@@ -1,8 +1,10 @@
 package com.example.growgrow
 
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,7 @@ class ShowProfileActivity : AppCompatActivity(){
     private val binding get() = _binding!!
     private lateinit var db : FirebaseFirestore
     private lateinit var auth : FirebaseAuth
+    private lateinit var userId: String
     private lateinit var profileId: String
     private lateinit var keywords: List<String>
     private lateinit var recyclerView : RecyclerView
@@ -35,6 +38,9 @@ class ShowProfileActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         this.db = FirebaseFirestore.getInstance()
+        this.auth = FirebaseAuth.getInstance()
+        this.userId = auth.currentUser?.uid.toString()
+
         recyclerView = binding.recyclerViewBioShow
         recyclerView.layoutManager = LinearLayoutManager(this)
         bioArrayList = arrayListOf()
@@ -44,10 +50,31 @@ class ShowProfileActivity : AppCompatActivity(){
         recyclerView.adapter = myAdapter
 
 
+
+
         if(intent.hasExtra("profileId")) {
             this.profileId = intent.getStringExtra("profileId").toString()
         }
 
+
+        if( profileId == userId ) {
+
+            binding.saveUserBtn.visibility = View.GONE
+
+        }
+
+        db.collection("Users")
+                .document(userId)
+                .collection("SavedUsers")
+                .document(profileId)
+                .get().addOnSuccessListener { document ->
+
+            if(document.exists()){
+
+                binding.saveUserBtn.text = "저장됨"
+
+            }
+        }
 
        db.collection("Users").document(profileId).get().addOnSuccessListener { document ->
 
@@ -107,6 +134,38 @@ class ShowProfileActivity : AppCompatActivity(){
 
 
 
+        }
+
+        binding.saveUserBtn.setOnClickListener {
+
+            if(binding.saveUserBtn.text.toString() == "저장됨") {
+
+
+            } else {
+
+                val savedUser = HashMap<String, Any>()
+
+                savedUser["uid"] = profileId
+                savedUser["fullname"] = binding.fullnameShow.text.toString()
+                savedUser["username"] = binding.usernameShow.text.toString()
+                savedUser["summary"] = binding.summaryShow.text.toString()
+                savedUser["depart"] = binding.departShow.text.toString()
+                savedUser["major"] = binding.majorShow.text.toString()
+
+
+                db.collection("Users")
+                        .document(userId)
+                        .collection("SavedUsers")
+                        .document(profileId)
+                        .set(savedUser)
+
+
+                binding.saveUserBtn.text = "저장됨"
+
+
+            }
+
+            Log.d("id", profileId + FirebaseAuth.getInstance().currentUser!!.uid)
         }
 
         EventChangeListener()
