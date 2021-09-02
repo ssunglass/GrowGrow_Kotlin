@@ -140,6 +140,13 @@ class ShowProfileActivity : AppCompatActivity(){
 
             if(binding.saveUserBtn.text.toString() == "저장됨") {
 
+                binding.saveUserBtn.text = "저장"
+                db.collection("Users")
+                        .document(userId)
+                        .collection("SavedUsers")
+                        .document(profileId)
+                        .delete()
+
 
             } else {
 
