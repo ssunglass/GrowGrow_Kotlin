@@ -30,7 +30,7 @@ class UserAdapter(
 
         val user : User = userList[position]
         holder.fullName.text = user.getFullname()
-        holder.userName.text = user.getUsername()
+        holder.userName.text = "@${user.getUsername()}"
         holder.depart.text = user.getDepart()
         holder.major.text = user.getMajor()
         holder.summary.text = user.getSummary()

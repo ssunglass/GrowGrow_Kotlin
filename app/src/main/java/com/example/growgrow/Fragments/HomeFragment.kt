@@ -89,12 +89,15 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
         if(uid.isNotEmpty()){
 
             documentReference
-                    .addSnapshotListener( object: EventListener<DocumentSnapshot>{
+                    .addSnapshotListener(object : EventListener<DocumentSnapshot> {
 
                         override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
 
-                            binding.currentUser.text = value?.getString("fullname")
-                            binding.currentUsername.text = value?.getString("username")
+                            val currentFullname = value?.getString("fullname")
+                            val currentUsername = value?.getString("username")
+
+                            binding.currentUser.text = currentFullname
+                            binding.currentUsername.text = "@${currentUsername}"
 
                         }
 

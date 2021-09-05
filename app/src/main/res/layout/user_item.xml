@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/user_layout_shape"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,12 +17,25 @@
             android:id="@+id/fullname_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp" />
+            android:textSize="25sp"
+            android:textColor="@color/colorBlack"
+            android:textFontWeight="900"/>
 
         <TextView
             android:id="@+id/username_textview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginEnd="60sp"
+            android:layout_height="2dp"
+            android:background="#CBCBCB"
+            android:layout_marginTop="7sp"
+            android:layout_marginBottom="7sp"
+
+           />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,16 +45,29 @@
             <TextView
                 android:id="@+id/depart_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="#A7A7A7"
+                android:layout_marginRight="3dp"/>
 
             <TextView
                 android:id="@+id/major_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="#A7A7A7"/>
 
 
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginEnd="60sp"
+            android:layout_height="2dp"
+            android:background="#CBCBCB"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,7 +79,8 @@
                 android:inputType="textMultiLine"
                 android:id="@+id/summary_testview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="#000000"/>
 
 
         </LinearLayout>
