@@ -124,7 +124,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                     if (user != null) {
                         binding.fullnameProfile.text = user.getFullname()
-                        binding.usernameProfile.text = user.getUsername()
+                        binding.usernameProfile.text = "@${user.getUsername()}"
                         binding.summaryProfile.text = user.getSummary()
                         binding.departProfile.text = user.getDepart()
                         binding.majorProfile.text = user.getMajor()
