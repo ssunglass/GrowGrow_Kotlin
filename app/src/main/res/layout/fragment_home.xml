@@ -42,14 +42,16 @@
                         android:layout_height="wrap_content"
                         android:textSize="30sp"
                         android:textColor="@color/colorBlack"
-                        android:textFontWeight="900"/>
+                        android:textFontWeight="900"
+                        android:includeFontPadding="false"/>
 
                     <TextView
                         android:id="@+id/currentUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorBlack"
-                        android:layout_marginLeft="3dp"/>
+                        android:layout_marginLeft="3dp"
+                        android:includeFontPadding="false"/>
 
 
                 </LinearLayout>
@@ -77,8 +79,7 @@
                         android:layout_alignParentRight="true"
                         android:text="내 커리어 바로가기"
                         android:textColor="#818181"
-
-
+                        android:includeFontPadding="false"
                         />
                 </RelativeLayout>
 
@@ -132,6 +133,7 @@
                 android:textFontWeight="900"
                 android:textAlignment="center"
                 android:text="다른 사람들은 지금을 어떻게 보내고 있을까?"
+                android:includeFontPadding="false"
                 />
 
 

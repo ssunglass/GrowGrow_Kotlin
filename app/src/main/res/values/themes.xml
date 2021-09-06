@@ -10,6 +10,9 @@
 
         <!-- Customize your theme here. -->
 
+        <item name="android:textViewStyle">@style/myTextFontStyle</item>
+
+
 
 
     </style>

@@ -19,13 +19,15 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textColor="@color/colorBlack"
+            android:includeFontPadding="false"
             android:textFontWeight="900"/>
 
         <TextView
             android:id="@+id/username_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"/>
+            android:textColor="@color/colorBlack"
+            android:includeFontPadding="false"/>
 
         <View
             android:layout_width="match_parent"
@@ -47,12 +49,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#A7A7A7"
+                android:includeFontPadding="false"
                 android:layout_marginRight="3dp"/>
 
             <TextView
                 android:id="@+id/major_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:textColor="#A7A7A7"/>
 
 
@@ -80,6 +84,7 @@
                 android:id="@+id/summary_testview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:textColor="#000000"/>
 
 
