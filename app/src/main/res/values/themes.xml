@@ -11,6 +11,7 @@
         <!-- Customize your theme here. -->
 
         <item name="android:textViewStyle">@style/myTextFontStyle</item>
+        <item name="android:statusBarColor">@color/colorBlack</item>
 
 
 

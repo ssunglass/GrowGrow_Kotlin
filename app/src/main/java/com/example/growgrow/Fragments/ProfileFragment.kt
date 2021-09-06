@@ -373,6 +373,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
             super.onDestroyView()
         }
 
+
+
    private fun EventChangeListener(){
 
 
@@ -471,6 +473,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
 
     }
+
+
 
 }
 
