@@ -31,17 +31,29 @@ class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var firebaseUser: FirebaseUser
     private lateinit var region: String
-    private lateinit var depart: String
+    private lateinit var major: String
+    private lateinit var apiUrl: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        depart = ""
+        major = ""
 
         _binding =  ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        /*
+        val urlHum = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100391"
+        val urlSoc = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100392"
+        val urlEdu = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100393"
+        val urlEng = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100394"
+        val urlNat = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100395"
+        val urlMed = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100396"
+        val urlArt = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100397"
+
+
+         */
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
         setupSpinnerRegion()
@@ -49,6 +61,9 @@ class EditProfileActivity : AppCompatActivity() {
         setupSpinnerHandler()
 
         userInfo()
+
+
+
 
 
 
@@ -196,17 +211,23 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
 
+
     private fun getJson(){
 
         thread(start = true){
 
-            val stream = URL("https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list").openStream()
+            var stream = URL("https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100392").openStream()
             val read = BufferedReader(InputStreamReader(stream, "UTF-8"))
-            depart  = read.readLine()
+            major  = read.readLine()
+            
 
-            Log.d("DEPART", depart)
+            val jsonObject = JSONObject(major)
+            val json2Object = jsonObject.getJSONObject("dataSearch")
+            val jsonArray = json2Object.getJSONArray("content")
 
+            val jsonTest = jsonArray.getJSONObject(0).getString("mClass")
 
+            Log.d("JSONTEST", jsonTest)
 
         }
 
