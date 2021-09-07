@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -47,6 +48,8 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+
+
         }
 
 
@@ -58,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val navView: NavigationBarView = findViewById(R.id.nav_view)
+
 
 
         navView.setOnItemSelectedListener(onNavigationItemSelectedListener)
