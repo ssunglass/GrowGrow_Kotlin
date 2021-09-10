@@ -112,6 +112,7 @@ class EditProfileActivity : AppCompatActivity() {
                         binding.usernameProfile.setText(user!!.getUsername())
                         binding.summaryProfile.setText(user!!.getSummary())
                         binding.majorProfile.setText(user!!.getMajor())
+                        binding.selectedRegion.text = user!!.getRegion()
 
                     }
 
@@ -137,7 +138,7 @@ class EditProfileActivity : AppCompatActivity() {
         db.collection("Users").document(firebaseUser.uid).update(user)
 
         val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-        startActivity(intent)
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         finish()
 
 

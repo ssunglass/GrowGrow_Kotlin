@@ -74,12 +74,12 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
 
         cardview.setOnClickListener(View.OnClickListener {
 
-
-
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
+          /*  val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.fragment_container, ProfileFragment())
             transaction?.commit()
 
+
+           */
         })
 
 
