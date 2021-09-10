@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,7 @@ import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.model.Document
 import java.time.Year
 import java.util.*
 
@@ -106,6 +108,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                 }
             }
+
 
             val touchHelper = ItemTouchHelper(swipeGesture)
             touchHelper.attachToRecyclerView(recyclerView)
@@ -312,6 +315,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                 startActivity(Intent(context, AddBioActivity::class.java))
 
 
+
+
                 /*val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
                 val builder = AlertDialog.Builder(requireContext())
@@ -383,21 +388,40 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
        db.collection("Users").document(userId).collection("Bios").orderBy("date")
                .addSnapshotListener(object : EventListener<QuerySnapshot> {
 
+
+
                    override fun onEvent(
                            value: QuerySnapshot?,
                            error: FirebaseFirestoreException?) {
+
+                       bioArrayList.clear()
 
                        if (error != null) {
                            Log.e("FireStore Error", error.message.toString())
                            return
 
                        }
+                     for(d:DocumentSnapshot in value?.documents!!){
 
-                       for (dc: DocumentChange in value?.documentChanges!!) {
+                        val data = d.toObject(Bio::class.java)
+
+
+                         if (data != null) {
+                             bioArrayList.add(data)
+
+                         }
+
+
+                     }
+
+
+
+                    /*   for (dc: DocumentChange in value?.documentChanges!!) {
 
                            if (dc.type == DocumentChange.Type.ADDED ) {
 
                                val data = dc.document.toObject(Bio::class.java)
+
 
 
                                bioArrayList.add(data)
@@ -405,6 +429,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                            }
 
                        }
+
+                     */
 
                        myAdapter.notifyDataSetChanged()
 

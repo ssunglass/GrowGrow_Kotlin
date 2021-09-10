@@ -219,21 +219,32 @@ class EditProfileActivity : AppCompatActivity() {
             var stream = URL("https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100392").openStream()
             val read = BufferedReader(InputStreamReader(stream, "UTF-8"))
             major  = read.readLine()
-            
+
+            runOnUiThread{
 
             val jsonObject = JSONObject(major)
             val json2Object = jsonObject.getJSONObject("dataSearch")
             val jsonArray = json2Object.getJSONArray("content")
 
-            val jsonTest = jsonArray.getJSONObject(0).getString("mClass")
+           // val jsonTest = jsonArray.getJSONObject(0).getString("mClass")
 
-            Log.d("JSONTEST", jsonTest)
+
+
+                for(i in 0 until jsonArray.length()) {
+
+                    val json3Object = jsonArray.getJSONObject(i)
+
+
+
+                }
+
+
 
         }
 
 
 
-        runOnUiThread{
+
 
 
         }

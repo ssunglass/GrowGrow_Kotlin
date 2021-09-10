@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
+import com.example.growgrow.Fragments.ProfileFragment
 import com.example.growgrow.databinding.ActivityAddBioBinding
 import com.example.growgrow.databinding.ActivityEditProfileBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -88,10 +89,12 @@ class AddBioActivity : AppCompatActivity() {
             db.collection("Users").document(userId)
                 .collection("Bios").document(date).set(bio)
 
-
-            val intent = Intent(this@AddBioActivity, MainActivity::class.java)
-            startActivity(intent)
+             val intent = Intent(this@AddBioActivity, MainActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             finish()
+
+
+
 
 
         }
