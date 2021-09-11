@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="계열"
+
+        android:textAlignment="center"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/select_depart_chipgroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleSelection="true"
+        >
+
+        <com.google.android.material.chip.Chip
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAlignment="center"
+            android:text="인문"/>
+        <com.google.android.material.chip.Chip
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAlignment="center"
+            android:text="사회"/>
+        <com.google.android.material.chip.Chip
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAlignment="center"
+            android:text="공학"/>
+        <com.google.android.material.chip.Chip
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAlignment="center"
+            android:text="자연"/>
+        <com.google.android.material.chip.Chip
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAlignment="center"
+            android:text="교육"/>
+        <com.google.android.material.chip.Chip
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAlignment="center"
+            android:text="의약"/>
+        <com.google.android.material.chip.Chip
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAlignment="center"
+            android:text="예체능"/>
+
+
+
+
+    </com.google.android.material.chip.ChipGroup>
+
+</LinearLayout>

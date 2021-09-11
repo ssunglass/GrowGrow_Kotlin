@@ -156,12 +156,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:textAlignment="center"
                 android:text="예체능"/>
-            <com.google.android.material.chip.Chip
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:textAlignment="center"
-                android:text="기타"/>
+
 
 
 

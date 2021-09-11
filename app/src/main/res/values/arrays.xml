@@ -11,6 +11,7 @@
         <item>제주</item>
     </string-array>
 
+    <!--
     <string-array name="depart_array">
         <item>계열</item>
         <item>인문</item>
@@ -20,8 +21,8 @@
         <item>교육</item>
         <item>의약</item>
         <item>예체능</item>
-        <item>기타</item>
     </string-array>
+-->
 
 
 
