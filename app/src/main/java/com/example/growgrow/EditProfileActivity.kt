@@ -4,17 +4,19 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.Model.User
 import com.example.growgrow.databinding.ActivityEditProfileBinding
+import com.example.growgrow.recyclerview.MajorAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.FirebaseAuth
@@ -39,17 +41,22 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var region: String
     private lateinit var major: String
     private lateinit var apiUrl: String
+    private lateinit var majorArray: ArrayList<String>
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var majorAdapter: MajorAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         major = ""
         apiUrl = ""
+        majorArray = arrayListOf()
+
 
         _binding =  ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
@@ -57,19 +64,6 @@ class EditProfileActivity : AppCompatActivity() {
         setupSpinnerHandler()
 
         userInfo()
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         binding.saveEditBtn.setOnClickListener{
@@ -81,10 +75,14 @@ class EditProfileActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+
+
         binding.selectDepart.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.depart_dialog, null)
             val chipGroup = dialogView.findViewById<ChipGroup>(R.id.select_depart_chipgroup)
+
+
 
             builder.setView(dialogView)
                 .setPositiveButton("선택", DialogInterface.OnClickListener{ dialog, id ->
@@ -93,6 +91,8 @@ class EditProfileActivity : AppCompatActivity() {
                     val chip = dialogView.findViewById<Chip>(chipGroup.checkedChipId)
 
                     if(chip != null) {
+
+                        majorArray.clear()
 
                         binding.selectDepart.text = chip.text.toString()
 
@@ -105,6 +105,8 @@ class EditProfileActivity : AppCompatActivity() {
                         val urlMed = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100396"
                         val urlArt = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100397"
 
+
+
                         when (binding.selectDepart.text) {
                             "인문" -> apiUrl = urlHum
                             "사회" -> apiUrl = urlSoc
@@ -116,15 +118,7 @@ class EditProfileActivity : AppCompatActivity() {
                         }
 
                         getJson()
-
-
-
                     }
-
-
-
-
-
 
 
                 })
@@ -142,6 +136,12 @@ class EditProfileActivity : AppCompatActivity() {
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
             val dialogView: View = layoutInflater.inflate(R.layout.major_search_dialog, null)
 
+            recyclerView = dialogView.findViewById<RecyclerView>(R.id.recycler_view_major)
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            majorAdapter = MajorAdapter(majorArray)
+            recyclerView.adapter = majorAdapter
+
+
             builder.setView(dialogView)
                 .setPositiveButton("선택", DialogInterface.OnClickListener{ dialog, id ->
 
@@ -160,6 +160,7 @@ class EditProfileActivity : AppCompatActivity() {
 
 
         }
+
         binding.logoutBtn.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
@@ -170,6 +171,8 @@ class EditProfileActivity : AppCompatActivity() {
 
 
         }
+
+
 
     }
 
@@ -189,9 +192,37 @@ class EditProfileActivity : AppCompatActivity() {
                         // binding.majorProfile.setText(user!!.getMajor())
                         binding.selectedRegion.text = user!!.getRegion()
 
+                        if(user!!.getDepart() != "계열"){
+
+                            val urlHum = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100391"
+                            val urlSoc = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100392"
+                            val urlEdu = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100393"
+                            val urlEng = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100394"
+                            val urlNat = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100395"
+                            val urlMed = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100396"
+                            val urlArt = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8fa1b6fffaf969b85712d6ea45a921fd&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&subject=100397"
+
+
+                            when (binding.selectDepart.text) {
+                                "인문" -> apiUrl = urlHum
+                                "사회" -> apiUrl = urlSoc
+                                "공학" -> apiUrl = urlEdu
+                                "자연" -> apiUrl = urlEng
+                                "교육" -> apiUrl = urlNat
+                                "의약" -> apiUrl = urlMed
+                                "예체능" -> apiUrl = urlArt
+                            }
+                            getJson()
+
+                        }
+
+
+
                     }
 
                 }
+
+
 
 
 
@@ -229,9 +260,6 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     }
-
-
-
     private fun setupSpinnerHandler() {
         binding.regionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -277,18 +305,21 @@ class EditProfileActivity : AppCompatActivity() {
 
            // val jsonTest = jsonArray.getJSONObject(0).getString("mClass")
 
+                for(i in 0 until jsonArray.length()) {
 
+                    val jsonMajorObject = jsonArray.getJSONObject(i)
 
-            /*    for(i in 0 until jsonArray.length()) {
+                    val majorName = jsonMajorObject.getString("mClass")
 
-                    val json3Object = jsonArray.getJSONObject(i)
-
-
+                    majorArray.add(majorName)
 
                 }
 
 
-             */
+
+
+
+
 
 
         }
@@ -301,6 +332,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     }
+
 
 
 
