@@ -13,5 +13,13 @@
         android:textColor="@color/colorBlack"/>
 
 
+    <ImageView
+        android:id="@+id/checked_major"
+        android:layout_width="35dp"
+        android:layout_height="25dp"
+        android:src="@drawable/check"
+        android:visibility="gone"/>
+
+
 
 </LinearLayout>

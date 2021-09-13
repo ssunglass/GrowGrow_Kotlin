@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -29,7 +30,7 @@ import java.net.URL
 import kotlin.concurrent.thread
 
 
-class EditProfileActivity : AppCompatActivity(),MajorAdapter.UserOnClickListener {
+class EditProfileActivity : AppCompatActivity() {
 
 
     private var _binding: ActivityEditProfileBinding? = null
@@ -44,6 +45,7 @@ class EditProfileActivity : AppCompatActivity(),MajorAdapter.UserOnClickListener
     private lateinit var majorArray: ArrayList<String>
     private lateinit var recyclerView : RecyclerView
     private lateinit var majorAdapter: MajorAdapter
+
 
 
 
@@ -142,7 +144,7 @@ class EditProfileActivity : AppCompatActivity(),MajorAdapter.UserOnClickListener
             recyclerView = dialogView.findViewById<RecyclerView>(R.id.recycler_view_major)
             recyclerView.layoutManager = LinearLayoutManager(this)
 
-            majorAdapter = MajorAdapter(majorArray,this@EditProfileActivity)
+            majorAdapter = MajorAdapter(majorArray)
             recyclerView.adapter = majorAdapter
 
             majorSearchBar.addTextChangedListener(object : TextWatcher {
@@ -162,14 +164,11 @@ class EditProfileActivity : AppCompatActivity(),MajorAdapter.UserOnClickListener
 
 
             })
-
-
-
-
             builder.setView(dialogView)
                 .setPositiveButton("선택", DialogInterface.OnClickListener{ dialog, id ->
 
 
+                    binding.selectMajor.text = majorAdapter.getSelectedMajor().toString()
 
 
 
@@ -213,7 +212,7 @@ class EditProfileActivity : AppCompatActivity(),MajorAdapter.UserOnClickListener
                         binding.usernameProfile.setText(user!!.getUsername())
                         binding.summaryProfile.setText(user!!.getSummary())
                         binding.selectDepart.text = user!!.getDepart()
-                        // binding.majorProfile.setText(user!!.getMajor())
+                        binding.selectMajor.text = user!!.getMajor()
                         binding.selectedRegion.text = user!!.getRegion()
 
                         if(user!!.getDepart() != "계열"){
@@ -263,12 +262,12 @@ class EditProfileActivity : AppCompatActivity(),MajorAdapter.UserOnClickListener
         user["summary"] = binding.summaryProfile.text.toString()
         user["region"] = binding.selectedRegion.text.toString()
         user["depart"] = binding.selectDepart.text.toString()
-      //  user["major"] = binding.majorProfile.text.toString()
+        user["major"] = binding.selectMajor.text.toString()
 
         db.collection("Users").document(firebaseUser.uid).update(user)
 
         val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
         finish()
 
 
@@ -355,10 +354,7 @@ class EditProfileActivity : AppCompatActivity(),MajorAdapter.UserOnClickListener
 
     }
 
-    override fun onClick(position: Int) {
 
-
-    }
 
 
     /*

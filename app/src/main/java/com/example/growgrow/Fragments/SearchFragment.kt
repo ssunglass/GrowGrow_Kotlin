@@ -183,7 +183,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
                     searchText.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isNotEmpty() -> query = db.collection("Users").whereIn("depart",selectedChips).whereEqualTo("region", filterRegion)
 
 
-                    searchText.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereArrayContains("keywords", searchText)
+                    searchText.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereArrayContains("keywords", searchText )
                     searchText.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query = db.collection("Users").whereArrayContains("keywords", searchText).whereIn("depart",selectedChips)
                     searchText.isNotEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereArrayContains("keywords", searchText).whereEqualTo("region", filterRegion)
 

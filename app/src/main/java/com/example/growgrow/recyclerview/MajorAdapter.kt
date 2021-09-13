@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.EditProfileActivity
@@ -12,10 +13,15 @@ import com.example.growgrow.R
 
 class MajorAdapter(
         private val majorList: ArrayList<String>,
-        val listener: EditProfileActivity
 ):RecyclerView.Adapter<MajorAdapter.MyViewHolder>(),Filterable {
 
     var majorFilterList = ArrayList<String>()
+    var selectedItemPos = -1
+
+
+
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MajorAdapter.MyViewHolder {
@@ -40,11 +46,19 @@ class MajorAdapter(
 
        holder.majorName.text = majorText
 
+        if(selectedItemPos == -1){
+            holder.checkImage.visibility = View.GONE
+        } else {
+            if(selectedItemPos ==  holder.bindingAdapterPosition){
+                holder.checkImage.visibility = View.VISIBLE
+            } else{
+                holder.checkImage.visibility = View.GONE
+
+            }
+        }
+
     }
 
-    interface UserOnClickListener{
-        fun onClick(position: Int)
-    }
 
     override fun getItemCount(): Int {
 
@@ -52,13 +66,39 @@ class MajorAdapter(
 
     }
 
+    fun getSelectedMajor(): String? {
+
+        if(selectedItemPos != null ){
+
+            return majorFilterList[selectedItemPos]
+
+
+        } else{
+            return null
+        }
+
+
+    }
+
     inner class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val majorName = itemView.findViewById<TextView>(R.id.major_name)
+        val checkImage = itemView.findViewById<ImageView>(R.id.checked_major)
+
+
+
+
 
         init {
             itemView.setOnClickListener {
+                checkImage.visibility = View.VISIBLE
                 val position = bindingAdapterPosition
-                listener.onClick(position)
+
+                if(selectedItemPos != position){
+
+                    notifyItemChanged(selectedItemPos)
+                    selectedItemPos = bindingAdapterPosition
+                }
+
             }
         }
 
@@ -94,6 +134,8 @@ class MajorAdapter(
         }
 
     }
+
+
 
 
 }
