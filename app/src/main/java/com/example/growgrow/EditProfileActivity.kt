@@ -1,16 +1,16 @@
 package com.example.growgrow
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +29,7 @@ import java.net.URL
 import kotlin.concurrent.thread
 
 
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity(),MajorAdapter.UserOnClickListener {
 
 
     private var _binding: ActivityEditProfileBinding? = null
@@ -44,6 +44,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var majorArray: ArrayList<String>
     private lateinit var recyclerView : RecyclerView
     private lateinit var majorAdapter: MajorAdapter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,11 +136,34 @@ class EditProfileActivity : AppCompatActivity() {
         binding.selectMajor.setOnClickListener {
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
             val dialogView: View = layoutInflater.inflate(R.layout.major_search_dialog, null)
+            val majorSearchBar =  dialogView.findViewById<EditText>(R.id.major_search_bar)
+
 
             recyclerView = dialogView.findViewById<RecyclerView>(R.id.recycler_view_major)
             recyclerView.layoutManager = LinearLayoutManager(this)
-            majorAdapter = MajorAdapter(majorArray)
+
+            majorAdapter = MajorAdapter(majorArray,this@EditProfileActivity)
             recyclerView.adapter = majorAdapter
+
+            majorSearchBar.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+
+                    majorAdapter.filter.filter(s.toString())
+
+                }
+
+
+            })
+
+
 
 
             builder.setView(dialogView)
@@ -303,8 +327,6 @@ class EditProfileActivity : AppCompatActivity() {
             val jsonArray = jsonSecObject.getJSONArray("content")
 
 
-           // val jsonTest = jsonArray.getJSONObject(0).getString("mClass")
-
                 for(i in 0 until jsonArray.length()) {
 
                     val jsonMajorObject = jsonArray.getJSONObject(i)
@@ -333,7 +355,10 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
+    override fun onClick(position: Int) {
 
+
+    }
 
 
     /*
