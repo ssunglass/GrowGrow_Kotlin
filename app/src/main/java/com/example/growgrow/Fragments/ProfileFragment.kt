@@ -3,6 +3,8 @@ package com.example.growgrow.Fragments
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -32,6 +35,7 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.model.Document
 import java.time.Year
 import java.util.*
+import kotlin.random.Random
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -54,6 +58,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
     private lateinit var description: String
     private lateinit var date: String
     private lateinit var keywords: List<String>
+    private lateinit var colors: List<Int>
+    private lateinit var random: Random
 
 
 
@@ -72,6 +78,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
             auth = FirebaseAuth.getInstance()
             userId = auth.currentUser?.uid.toString()
             userRef = db.collection("Users").document(userId)
+            random = Random
+            colors = mutableListOf(R.color.chip_color_1, R.color.chip_color_2,R.color.chip_color_3)
 
 
             recyclerView = binding.recyclerViewBio
@@ -151,7 +159,16 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                             val chip_item = chip_item_layout.findViewById<Chip>(R.id.chip_item)
                             val chip_group = binding.keywordsChip
 
+
+
                             chip_item.text = keyword
+                            chip_item.chipBackgroundColor =  ColorStateList.valueOf(ContextCompat.getColor(requireContext(), colors[random.nextInt(colors.size)]))
+
+                            if(chip_item.chipBackgroundColor ==  ColorStateList.valueOf(ContextCompat.getColor(requireContext(), colors[2]))) {
+
+                                chip_item.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorWhite)))
+                            }
+
 
                             chip_item.setOnCloseIconClickListener{ view->
                                 val deleted_chip = (view as Chip).text.toString()
@@ -273,6 +290,13 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                             chip_item.text = keyword
 
+                            chip_item.chipBackgroundColor =  ColorStateList.valueOf(ContextCompat.getColor(requireContext(), colors[random.nextInt(colors.size)]))
+
+                            if(chip_item.chipBackgroundColor ==  ColorStateList.valueOf(ContextCompat.getColor(requireContext(), colors[2]))) {
+
+                                chip_item.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.colorWhite)))
+                            }
+                            
                             chip_item.setOnCloseIconClickListener{ view->
                                 val deleted_chip = (view as Chip).text.toString()
                                 db.collection("Users").document(userId)
