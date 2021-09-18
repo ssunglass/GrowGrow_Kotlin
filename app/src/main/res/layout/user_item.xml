@@ -6,12 +6,14 @@
     android:orientation="vertical"
     android:background="@drawable/user_layout_shape"
     android:layout_margin="10dp"
-    android:padding="10dp">
+    android:padding="10dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/fullname_textview"
@@ -20,7 +22,7 @@
             android:textSize="25sp"
             android:textColor="@color/colorBlack"
             android:includeFontPadding="false"
-            android:textFontWeight="900"/>
+            android:textFontWeight="900" />
 
         <TextView
             android:id="@+id/username_textview"

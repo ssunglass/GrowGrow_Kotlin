@@ -99,11 +99,11 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                             userRef
                                 .collection("Bios")
-                                .document(bioArrayList[viewHolder.adapterPosition].getDate())
+                                .document(bioArrayList[viewHolder.bindingAdapterPosition].getDate())
                                 .delete()
 
 
-                            myAdapter.deleteItem(viewHolder.adapterPosition)
+                            myAdapter.deleteItem(viewHolder.bindingAdapterPosition)
 
 
 

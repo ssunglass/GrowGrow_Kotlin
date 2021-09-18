@@ -90,7 +90,7 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
         recyclerView.layoutManager = staggeredGridLayoutManager //LinearLayoutManager(requireContext())
        // recyclerView.setHasFixedSize(true)
         userArrayList = arrayListOf()
-        myAdapter = UserAdapter(userArrayList, this@HomeFragment)
+        myAdapter = UserAdapter(userArrayList, this@HomeFragment, requireContext())
 
         recyclerView.adapter = myAdapter
 
