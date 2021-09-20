@@ -32,6 +32,7 @@ import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.model.Document
 import java.time.Year
 import java.util.*
@@ -127,7 +128,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
             val userRef = FirebaseFirestore.getInstance().collection("Users").document(userId)
 
-            userRef.get().addOnSuccessListener { document ->
+           /* userRef.get().addOnSuccessListener { document ->
 
                 if (document != null) {
 
@@ -142,6 +143,30 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                     }
                 }
 
+            }
+
+            */
+            userRef.addSnapshotListener{ snapshot, e ->
+                if (e != null) {
+                    Log.w("tag", "Listen failed", e )
+            return@addSnapshotListener
+                }
+
+                if( snapshot != null && snapshot.exists()){
+                    Log.d("TEST", "${snapshot.data}")
+                    val user = snapshot.toObject<User>(User::class.java)
+
+                    if (user != null) {
+
+                        binding.fullnameProfile.text = user.getFullname()
+                        binding.usernameProfile.text = "@${user.getUsername()}"
+                        binding.summaryProfile.text = user.getSummary()
+                        binding.departProfile.text = user.getDepart()
+                        binding.majorProfile.text = user.getMajor()
+                    }
+                } else {
+                    Log.d("NULL","DATA IS NULL")
+                }
             }
 
             userRef.get().addOnSuccessListener { document ->
@@ -467,6 +492,8 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
 
     }
+
+
 
 
 
