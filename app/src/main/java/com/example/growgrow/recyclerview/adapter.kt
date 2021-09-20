@@ -48,7 +48,7 @@ class UserAdapter(
         holder.major.text = user.getMajor()
         holder.summary.text = user.getSummary()
 
-        
+
 
 
 

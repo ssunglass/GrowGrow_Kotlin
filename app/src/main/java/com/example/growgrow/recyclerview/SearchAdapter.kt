@@ -21,7 +21,7 @@ class SearchAdapter : FirestoreRecyclerAdapter<User, SearchAdapter.SearchViewHol
                                     viewType: Int): SearchViewHolder {
         // create a new view
         val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.user_item, parent, false)
+                .inflate(R.layout.user_search_item, parent, false)
         return SearchViewHolder(v)
     }
 

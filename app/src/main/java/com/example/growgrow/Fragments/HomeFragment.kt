@@ -22,6 +22,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.EventListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -151,6 +154,7 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
                                 val data = dc.document.toObject(User::class.java)
 
                                 userArrayList.add(data)
+                                userArrayList.shuffle()
 
                             }
 
