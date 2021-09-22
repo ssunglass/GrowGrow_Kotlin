@@ -120,11 +120,36 @@ class SignupActivity : AppCompatActivity() {
 
                         Toast.makeText(this,"가입되었습니다", Toast.LENGTH_LONG).show()
 
-                        val intent = Intent(this@SignupActivity, MainActivity::class.java)
+
+                        FirebaseAuth.getInstance().currentUser!!.sendEmailVerification()
+                                .addOnCompleteListener { task ->
+                                    if(task.isSuccessful){
+
+                                        val intent = Intent(this@SignupActivity, SigninActivity::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                        startActivity(intent)
+                                        finish()
+
+
+
+                                    } else {
+
+                                        Log.e("SEND EMAIL ERROR", "sendEmailVerification", task.getException());
+                                        Toast.makeText(this,
+                                                "Failed to send verification email.",
+                                                Toast.LENGTH_SHORT).show();
+
+
+                                    }
+                                }
+
+                       /* val intent = Intent(this@SignupActivity, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         finish()
 
+
+                        */
                     } else {
 
                         val message = task.exception!!.toString()

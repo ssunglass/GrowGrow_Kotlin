@@ -39,7 +39,7 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     private lateinit var firebaseUser: FirebaseUser
-    private lateinit var region: String
+  //  private lateinit var region: String
     private lateinit var major: String
     private lateinit var apiUrl: String
     private lateinit var majorArray: ArrayList<String>
