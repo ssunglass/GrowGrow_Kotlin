@@ -28,18 +28,7 @@ class EmailVerifyActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        if(currentUser.isEmailVerified){
 
-            Toast.makeText(this,"인증되었습니다",Toast.LENGTH_LONG).show()
-
-            val intent = Intent(this@EmailVerifyActivity, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
-
-
-
-        }
 
 
 
