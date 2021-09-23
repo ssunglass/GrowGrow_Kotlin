@@ -9,11 +9,16 @@ import com.example.growgrow.databinding.ActivityEditProfileBinding
 import com.example.growgrow.databinding.ActivitySigninBinding
 import com.example.growgrow.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class SigninActivity : AppCompatActivity() {
 
     private var _binding: ActivitySigninBinding? = null
     private val binding get() = _binding!!
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +26,9 @@ class SigninActivity : AppCompatActivity() {
 
         _binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
 
         binding.signupLinkBtn.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
@@ -54,8 +62,6 @@ class SigninActivity : AppCompatActivity() {
 
                         Toast.makeText(this,"로그인되었습니다", Toast.LENGTH_LONG).show()
 
-
-
                         val intent = Intent(this@SigninActivity, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
@@ -73,4 +79,6 @@ class SigninActivity : AppCompatActivity() {
         }
 
     }
+
+
 }

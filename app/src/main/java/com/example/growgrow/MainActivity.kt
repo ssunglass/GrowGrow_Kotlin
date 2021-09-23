@@ -19,7 +19,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
-    val auth = FirebaseAuth.getInstance()
+   // val auth = FirebaseAuth.getInstance()
+   // val user = auth.currentUser
 
 
 
@@ -71,16 +72,21 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    /*
     override fun onStart() {
         super.onStart()
 
-        if (auth.currentUser == null) {
+       if (user != null && user.isEmailVerified) {
             val intent = Intent(this, SigninActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
         }
+
+
     }
+
+       */
 
     private fun moveToFragment(fragment: Fragment)
     {

@@ -118,14 +118,14 @@ class SignupActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful){
 
-                        Toast.makeText(this,"가입되었습니다", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,"이메일 인증을 진행해주세요", Toast.LENGTH_LONG).show()
 
 
                         FirebaseAuth.getInstance().currentUser!!.sendEmailVerification()
                                 .addOnCompleteListener { task ->
                                     if(task.isSuccessful){
 
-                                        val intent = Intent(this@SignupActivity, SigninActivity::class.java)
+                                        val intent = Intent(this@SignupActivity, EmailVerifyActivity::class.java)
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                                         startActivity(intent)
                                         finish()

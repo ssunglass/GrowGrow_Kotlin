@@ -8,23 +8,30 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/networkd_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/networkd_config"
         android:theme="@style/Theme.GrowGrow">
-        <activity android:name=".AddBioActivity"></activity>
+        <activity android:name=".EmailVerifyActivity"></activity>
+        <activity android:name=".AddBioActivity" />
         <activity android:name=".ShowProfileActivity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".SigninActivity" />
-        <activity android:name=".EditProfileActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+        <activity android:name=".SigninActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+
+
+        </activity>
+        <activity android:name=".EditProfileActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
         </activity>
     </application>
 

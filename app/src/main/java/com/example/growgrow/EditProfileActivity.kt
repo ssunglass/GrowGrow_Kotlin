@@ -186,7 +186,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.logoutBtn.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+            val intent = Intent(this@EditProfileActivity, SigninActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
