@@ -59,6 +59,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
     private lateinit var description: String
     private lateinit var date: String
     private lateinit var keywords: List<String>
+    private lateinit var keywords_search: List<String>
     private lateinit var colors: List<Int>
     private lateinit var random: Random
 
@@ -161,7 +162,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                         binding.fullnameProfile.text = user.getFullname()
                         binding.usernameProfile.text = "@${user.getUsername()}"
                         binding.summaryProfile.text = user.getSummary()
-                        binding.departProfile.text = user.getDepart()
+                        binding.departProfile.text = "${user.getDepart()}계열"
                         binding.majorProfile.text = user.getMajor()
                     }
                 } else {
@@ -202,24 +203,13 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                                 chip_group.removeView(view)
 
-
-
                             }
 
                             chip_group.addView(chip_item)
 
-
-
                         }
-
-
-
                     }
                 }
-
-
-
-
 
             }
 
@@ -311,7 +301,31 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                             keyword = dialogText.text.toString()
 
                             db.collection("Users").document(userId)
-                                    .update("keywords", FieldValue.arrayUnion(keyword))
+                                .update("keywords", FieldValue.arrayUnion(keyword))
+
+
+
+                            var inputString = keyword
+                            val words = inputString.split(" ")
+
+                           for(word in words){
+                                var appendString = ""
+
+                                for(charPosition in inputString.indices){
+                                    appendString += inputString[charPosition].toString()
+
+
+                                    db.collection("Users").document(userId)
+                                        .update("keywords_search", FieldValue.arrayUnion(appendString))
+
+
+                                }
+
+                                inputString = inputString.replace("$word","")
+
+                            }
+
+
 
                             chip_item.text = keyword
 
@@ -324,8 +338,62 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                             
                             chip_item.setOnCloseIconClickListener{ view->
                                 val deleted_chip = (view as Chip).text.toString()
+
                                 db.collection("Users").document(userId)
                                         .update("keywords", FieldValue.arrayRemove(deleted_chip))
+
+                                db.collection("Users").document(userId)
+                                    .update("keywords_search", FieldValue.delete()).continueWith { task ->
+
+                                        userRef.get().addOnSuccessListener { document ->
+                                            if (document != null) {
+
+                                                val user = document.toObject<User>(User::class.java)
+
+                                                if (user != null) {
+
+                                                    keywords_search = user.getKeywords()
+
+                                                    for(keyword in keywords_search){
+
+                                                        var inputString = keyword
+                                                        val words = inputString.split(" ")
+
+                                                        for(word in words){
+                                                            var appendString = ""
+
+                                                            for(charPosition in inputString.indices){
+                                                                appendString += inputString[charPosition].toString()
+
+
+                                                                db.collection("Users").document(userId)
+                                                                    .update("keywords_search", FieldValue.arrayUnion(appendString))
+
+
+                                                            }
+
+                                                            inputString = inputString.replace("$word","")
+
+                                                        }
+
+
+
+
+                                                    }
+                                                }
+                                            }
+                                        }
+
+
+
+
+
+
+
+                                    }
+
+
+
 
                                 chip_group.removeView(view)
 

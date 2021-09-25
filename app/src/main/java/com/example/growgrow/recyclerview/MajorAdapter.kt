@@ -19,11 +19,6 @@ class MajorAdapter(
     var selectedItemPos = -1
 
 
-
-
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MajorAdapter.MyViewHolder {
 
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.major_item, parent,false)
