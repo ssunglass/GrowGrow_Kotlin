@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,6 +46,8 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
     private lateinit var db : FirebaseFirestore
     private lateinit var auth : FirebaseAuth
     private lateinit var uid: String
+    private lateinit var progressBar: ProgressBar
+    private lateinit var homeLayout: LinearLayout
 
 
    // private lateinit var dialog: Dialog
@@ -64,6 +68,8 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
 
 
 
+        homeLayout = binding.homeMainLayout
+        progressBar = binding.homeProgress
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
         documentReference = FirebaseFirestore.getInstance()
@@ -161,6 +167,9 @@ class HomeFragment : Fragment(), UserAdapter.UserOnClickListener {
                         }
 
                         myAdapter.notifyDataSetChanged()
+                       progressBar.visibility = View.GONE
+                        homeLayout.visibility = View.VISIBLE
+
 
                     }
 
