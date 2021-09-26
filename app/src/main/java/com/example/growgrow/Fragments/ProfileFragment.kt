@@ -198,8 +198,58 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                             chip_item.setOnCloseIconClickListener{ view->
                                 val deleted_chip = (view as Chip).text.toString()
+
                                 db.collection("Users").document(userId)
-                                        .update("keywords", FieldValue.arrayRemove(deleted_chip))
+                                    .update("keywords", FieldValue.arrayRemove(deleted_chip))
+
+                                db.collection("Users").document(userId)
+                                    .update("keywords_search", FieldValue.delete()).continueWith { task ->
+
+                                        if(task.isSuccessful){
+                                            userRef.get().addOnSuccessListener { document ->
+                                                if (document != null) {
+
+                                                    val user = document.toObject<User>(User::class.java)
+
+                                                    if (user != null) {
+
+                                                        keywords_search = user.getKeywords()
+
+                                                        for(keyword in keywords_search){
+
+                                                            var inputString = keyword
+                                                            val words = inputString.split(" ")
+
+                                                            for(word in words){
+                                                                var appendString = ""
+
+
+
+                                                                for(charPosition in inputString.indices){
+                                                                    appendString += inputString[charPosition].toString()
+
+
+                                                                    db.collection("Users").document(userId)
+                                                                        .update("keywords_search", FieldValue.arrayUnion(appendString))
+
+
+                                                                }
+
+                                                                inputString = inputString.replace("$word ", "")
+
+                                                            }
+
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+
+                                        }
+
+
+                                    }
 
                                 chip_group.removeView(view)
 
@@ -321,7 +371,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
                                 }
 
-                                inputString = inputString.replace("$word","")
+                                inputString = inputString.replace("$word ","")
 
                             }
 
@@ -345,59 +395,51 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                                 db.collection("Users").document(userId)
                                     .update("keywords_search", FieldValue.delete()).continueWith { task ->
 
-                                        userRef.get().addOnSuccessListener { document ->
-                                            if (document != null) {
+                                        if(task.isSuccessful){
+                                            userRef.get().addOnSuccessListener { document ->
+                                                if (document != null) {
 
-                                                val user = document.toObject<User>(User::class.java)
+                                                    val user = document.toObject<User>(User::class.java)
 
-                                                if (user != null) {
+                                                    if (user != null) {
 
-                                                    keywords_search = user.getKeywords()
+                                                        keywords_search = user.getKeywords()
 
-                                                    for(keyword in keywords_search){
+                                                        for(keyword in keywords_search){
 
-                                                        var inputString = keyword
-                                                        val words = inputString.split(" ")
+                                                            var inputString = keyword
+                                                            val words = inputString.split(" ")
 
-                                                        for(word in words){
-                                                            var appendString = ""
+                                                            for(word in words){
+                                                                var appendString = ""
 
-                                                            for(charPosition in inputString.indices){
-                                                                appendString += inputString[charPosition].toString()
+                                                                for(charPosition in inputString.indices){
+                                                                    appendString += inputString[charPosition].toString()
 
 
-                                                                db.collection("Users").document(userId)
-                                                                    .update("keywords_search", FieldValue.arrayUnion(appendString))
+                                                                    db.collection("Users").document(userId)
+                                                                        .update("keywords_search", FieldValue.arrayUnion(appendString))
 
+
+                                                                }
+
+                                                                inputString = inputString.replace("$word ","")
 
                                                             }
 
-                                                            inputString = inputString.replace("$word","")
 
                                                         }
-
-
-
-
                                                     }
                                                 }
                                             }
+
+
                                         }
-
-
-
-
-
 
 
                                     }
 
-
-
-
                                 chip_group.removeView(view)
-
-
 
                             }
 

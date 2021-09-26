@@ -109,7 +109,7 @@ class SignupActivity : AppCompatActivity() {
         user["depart"] = "계열"
         user["major"] = "전공"
         user["region"] = "지역"
-        user["keywords"] = arrayListOf("예시)sksunny", "예시)샘이랑")
+       // user["keywords"] = arrayListOf()
        // user["bios"] = arrayListOf(bio)
 
 
