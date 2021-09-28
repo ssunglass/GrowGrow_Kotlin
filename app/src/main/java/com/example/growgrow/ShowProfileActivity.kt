@@ -1,11 +1,13 @@
 package com.example.growgrow
 
+import android.content.res.ColorStateList
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.Model.Bio
@@ -16,6 +18,7 @@ import com.example.growgrow.recyclerview.OtherProfileBioAdapter
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import kotlin.random.Random
 
 class ShowProfileActivity : AppCompatActivity(){
 
@@ -29,6 +32,8 @@ class ShowProfileActivity : AppCompatActivity(){
     private lateinit var recyclerView : RecyclerView
     private lateinit var bioArrayList : ArrayList<Bio>
     private lateinit var myAdapter : OtherProfileBioAdapter
+    private lateinit var colors: List<Int>
+    private lateinit var random: Random
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +50,8 @@ class ShowProfileActivity : AppCompatActivity(){
         recyclerView.layoutManager = LinearLayoutManager(this)
         bioArrayList = arrayListOf()
         myAdapter = OtherProfileBioAdapter(bioArrayList)
+        random = Random
+        colors = mutableListOf(R.color.chip_color_1, R.color.chip_color_2,R.color.chip_color_3)
 
 
         recyclerView.adapter = myAdapter
@@ -85,7 +92,7 @@ class ShowProfileActivity : AppCompatActivity(){
                 if (user != null) {
                     binding.fullnameShow.text = user.getFullname()
                     binding.usernameShow.text= user.getUsername()
-                    binding.departShow.text = user.getDepart()
+                    binding.departShow.text = "${user.getDepart()}계열"
                     binding.majorShow.text = user.getMajor()
                     binding.summaryShow.text = user.getSummary()
                 }
@@ -107,6 +114,13 @@ class ShowProfileActivity : AppCompatActivity(){
                         val chip_item_layout = layoutInflater.inflate(R.layout.chip_item_show, null)
                         val chip_item = chip_item_layout.findViewById<Chip>(R.id.chip_item_show)
                         val chip_group = binding.keywordsChipShow
+
+                        chip_item.chipBackgroundColor =  ColorStateList.valueOf(ContextCompat.getColor(this, colors[random.nextInt(colors.size)]))
+
+                        if(chip_item.chipBackgroundColor ==  ColorStateList.valueOf(ContextCompat.getColor(this, colors[2]))) {
+
+                            chip_item.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorWhite)))
+                        }
 
                         chip_item.text = keyword
 

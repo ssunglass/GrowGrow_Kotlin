@@ -19,12 +19,10 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.growgrow.AddBioActivity
-import com.example.growgrow.EditProfileActivity
+import com.example.growgrow.*
 import com.example.growgrow.Model.Bio
 import com.example.growgrow.Model.User
 import com.example.growgrow.R
-import com.example.growgrow.SwipeGesture
 import com.example.growgrow.databinding.FragmentProfileBinding
 import com.example.growgrow.recyclerview.BioAdapter
 import com.example.growgrow.recyclerview.UserAdapter
@@ -333,6 +331,13 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
             binding.editBtn.setOnClickListener {
                 startActivity(Intent(context, EditProfileActivity::class.java))
+
+            }
+
+            binding.seeSavedUser.setOnClickListener {
+                val intent = Intent(requireContext(), SavedUserListActivity::class.java)
+                startActivity(intent)
+
 
             }
 

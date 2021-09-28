@@ -76,6 +76,16 @@
                     android:backgroundTint="#FFFF"
                     />
 
+                <Button
+                    android:id="@+id/see_saved_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/edit_btn"
+                    android:text="스크랩 보기" />
+
+
+
+
 
                 <ImageButton
                     android:id="@+id/share_btn"
