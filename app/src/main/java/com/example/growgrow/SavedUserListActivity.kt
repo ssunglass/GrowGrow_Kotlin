@@ -10,6 +10,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.growgrow.Fragments.LinearLayoutManagerWrapper
+import com.example.growgrow.Model.Bio
 import com.example.growgrow.Model.User
 import com.example.growgrow.databinding.ActivitySavedUserListBinding
 import com.example.growgrow.recyclerview.SearchAdapter
@@ -49,7 +50,7 @@ class SavedUserListActivity : AppCompatActivity(), UserAdapter.UserOnClickListen
 
         myAdapter = UserAdapter(savedUserArrayList, this@SavedUserListActivity, this)
         recyclerView.adapter = myAdapter
-        
+
 
         EventChangeListener()
 
@@ -68,21 +69,24 @@ class SavedUserListActivity : AppCompatActivity(), UserAdapter.UserOnClickListen
                     value: QuerySnapshot?,
                     error: FirebaseFirestoreException?) {
 
+                    savedUserArrayList.clear()
+
                     if (error != null) {
                         Log.e("FireStore Error", error.message.toString())
                         return
 
                     }
 
-                    for (dc: DocumentChange in value?.documentChanges!!) {
+                    for(d:DocumentSnapshot in value?.documents!!){
 
-                        if (dc.type == DocumentChange.Type.ADDED) {
+                        val data = d.toObject(User::class.java)
 
-                            val data = dc.document.toObject(User::class.java)
 
+                        if (data != null) {
                             savedUserArrayList.add(data)
 
                         }
+
 
                     }
 

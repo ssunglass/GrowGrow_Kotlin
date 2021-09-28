@@ -162,6 +162,7 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
                         binding.summaryProfile.text = user.getSummary()
                         binding.departProfile.text = "${user.getDepart()}계열"
                         binding.majorProfile.text = user.getMajor()
+
                     }
                 } else {
                     Log.d("NULL","DATA IS NULL")
