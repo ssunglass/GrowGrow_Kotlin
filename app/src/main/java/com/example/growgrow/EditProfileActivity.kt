@@ -1,5 +1,6 @@
 package com.example.growgrow
 
+import ConnectionLiveData
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -45,6 +46,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var majorArray: ArrayList<String>
     private lateinit var recyclerView : RecyclerView
     private lateinit var majorAdapter: MajorAdapter
+    private lateinit var cld : ConnectionLiveData
 
 
 
@@ -120,7 +122,9 @@ class EditProfileActivity : AppCompatActivity() {
                             "예체능" -> apiUrl = urlArt
                         }
 
-                        getJson()
+                        checkNetworkConnection()
+
+                       // getJson()
                     }
 
 
@@ -199,6 +203,30 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
+    private fun checkNetworkConnection(){
+        cld = ConnectionLiveData(application)
+
+        cld.observe(this, {isConnected ->
+
+            if(isConnected){
+
+              //  getJson()
+
+
+            } else {
+
+
+
+
+
+
+            }
+
+
+        })
+
+    }
+
     private fun userInfo(){
 
         FirebaseFirestore.getInstance()
@@ -235,7 +263,7 @@ class EditProfileActivity : AppCompatActivity() {
                                 "의약" -> apiUrl = urlMed
                                 "예체능" -> apiUrl = urlArt
                             }
-                            getJson()
+                            checkNetworkConnection()
 
                         }
 
@@ -311,7 +339,7 @@ class EditProfileActivity : AppCompatActivity() {
 
 
 
-    private fun getJson(){
+   private fun getJson(){
 
         thread(start = true){
 
@@ -353,6 +381,8 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
 
