@@ -1,13 +1,11 @@
 package com.example.growgrow
 
-import ConnectionLiveData
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -46,7 +44,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var majorArray: ArrayList<String>
     private lateinit var recyclerView : RecyclerView
     private lateinit var majorAdapter: MajorAdapter
-    private lateinit var cld : ConnectionLiveData
+
 
 
 
@@ -122,9 +120,9 @@ class EditProfileActivity : AppCompatActivity() {
                             "예체능" -> apiUrl = urlArt
                         }
 
-                        checkNetworkConnection()
 
-                       // getJson()
+
+                        getJson()
                     }
 
 
@@ -203,29 +201,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun checkNetworkConnection(){
-        cld = ConnectionLiveData(application)
 
-        cld.observe(this, {isConnected ->
-
-            if(isConnected){
-
-              //  getJson()
-
-
-            } else {
-
-
-
-
-
-
-            }
-
-
-        })
-
-    }
 
     private fun userInfo(){
 
@@ -263,7 +239,7 @@ class EditProfileActivity : AppCompatActivity() {
                                 "의약" -> apiUrl = urlMed
                                 "예체능" -> apiUrl = urlArt
                             }
-                            checkNetworkConnection()
+                            getJson()
 
                         }
 

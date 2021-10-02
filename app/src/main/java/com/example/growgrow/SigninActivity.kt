@@ -1,10 +1,15 @@
 package com.example.growgrow
 
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.growgrow.databinding.ActivityEditProfileBinding
 import com.example.growgrow.databinding.ActivitySigninBinding
 import com.example.growgrow.databinding.ActivitySignupBinding
@@ -37,6 +42,15 @@ class SigninActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun isNetworkAvailable(): Boolean{
+        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
+
+        return (capabilities != null && capabilities.hasCapability(NET_CAPABILITY_INTERNET))
+
+    }
+
 
     private fun loginUser() {
 
@@ -47,6 +61,7 @@ class SigninActivity : AppCompatActivity() {
 
             TextUtils.isEmpty(email) -> Toast.makeText(this,"이메일이 필요합니다", Toast.LENGTH_LONG).show()
             TextUtils.isEmpty(password) -> Toast.makeText(this,"비밀번호가 필요합니다", Toast.LENGTH_LONG).show()
+
 
 
 
@@ -92,19 +107,33 @@ class SigninActivity : AppCompatActivity() {
 
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onStart() {
         super.onStart()
-        if( user!= null ){
 
-            if(user.isEmailVerified){
+        if(isNetworkAvailable()){
 
-                val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
+            if( user!= null ){
 
+                if(user.isEmailVerified){
+
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+
+
+                }
 
             }
+
+
+        } else {
+            binding.mainSigninLayout.visibility = View.GONE
+            binding.disconnectedLayout.visibility = View.VISIBLE
+
+
 
 
         }
