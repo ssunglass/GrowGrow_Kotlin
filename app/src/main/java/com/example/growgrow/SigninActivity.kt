@@ -44,26 +44,6 @@ class SigninActivity : AppCompatActivity() {
 
        */
 
-        Firebase.dynamicLinks
-            .getDynamicLink(intent)
-            .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                var deepLink: Uri? = null
-
-                if(pendingDynamicLinkData != null) {
-                    deepLink = pendingDynamicLinkData.link
-                }
-                val user = Firebase.auth.currentUser
-                if (user == null &&
-                    deepLink != null &&
-                    deepLink.getBooleanQueryParameter("invitedby", false)) {
-                    val referrerUid = deepLink.getQueryParameter("invitedby")
-                    createAnonymousAccountWithReferrerInfo(referrerUid)
-                    startActivity(Intent(this, SignupActivity::class.java))
-
-                }
-
-
-            }
 
         binding.loginBtn.setOnClickListener {
             loginUser()
@@ -71,25 +51,6 @@ class SigninActivity : AppCompatActivity() {
     }
 
 
-    private fun createAnonymousAccountWithReferrerInfo(referrerUid: String?) {
-
-
-        Firebase.auth
-            .signInAnonymously()
-            .addOnSuccessListener {
-                val user = Firebase.auth.currentUser
-                val userRecord = FirebaseFirestore.getInstance().collection("Users")
-                    .document(user!!.uid)
-
-                val referred = HashMap<String, Any>()
-
-                referred["referred_by"] = referrerUid.toString()
-
-                userRecord.set(referred)
-
-            }
-
-    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun isNetworkAvailable(): Boolean{
@@ -160,6 +121,7 @@ class SigninActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onStart() {
         super.onStart()
+
 
         if(isNetworkAvailable()){
 

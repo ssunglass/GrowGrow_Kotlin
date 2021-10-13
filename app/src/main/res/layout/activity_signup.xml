@@ -95,7 +95,7 @@
 
         />
 
-    <Button
+  <!--  <Button
         android:id="@+id/login_link_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,10 +103,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:textSize="15dp"
         android:text="로그인하러가기"
+        android:textSize="15dp"
 
 
-        />
+        /> -->
 
 </RelativeLayout>
