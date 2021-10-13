@@ -239,6 +239,14 @@
 
                         />
 
+                    <Button
+                        android:id="@+id/invite_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="친구 초대"
+
+                        />
+
                 </LinearLayout>
 
 

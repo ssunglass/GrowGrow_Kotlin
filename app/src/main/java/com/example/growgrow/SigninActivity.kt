@@ -33,9 +33,11 @@ class SigninActivity : AppCompatActivity() {
         _binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.signupLinkBtn.setOnClickListener {
+      /*  binding.signupLinkBtn.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
+
+       */
 
         binding.loginBtn.setOnClickListener {
             loginUser()

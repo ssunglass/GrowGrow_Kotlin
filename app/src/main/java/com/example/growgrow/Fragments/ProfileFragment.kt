@@ -329,6 +329,13 @@ class ProfileFragment : Fragment(),BioAdapter.MyOnClickListener {
 
              ) */
 
+            binding.inviteBtn.setOnClickListener {
+                val intent = Intent(requireContext(), InviteActivity::class.java)
+                intent.putExtra("displayName", binding.fullnameProfile.text.toString())
+                startActivity(intent)
+
+
+            }
 
             binding.editBtn.setOnClickListener {
                 startActivity(Intent(context, EditProfileActivity::class.java))
