@@ -15,6 +15,8 @@ class User {
     private var date: String = ""
     private var description: String = ""
     private var keywords: List<String> = arrayListOf()
+    private var referTo: List<String> = arrayListOf()
+    private var referred_by: String = ""
 
 
 
@@ -31,6 +33,9 @@ class User {
                 date: String,
                 description: String,
                 keywords: List<String>,
+                referTo: List<String>,
+                referred_by: String
+
                )
     {
         this.username = username
@@ -43,6 +48,8 @@ class User {
         this.keywords = keywords
         this.date = date
         this.description = description
+        this.referTo = referTo
+        this.referred_by = referred_by
 
 
     }
@@ -78,8 +85,15 @@ class User {
         return major
     }
 
+    fun getReferredBy(): String {
+        return referred_by
+    }
     fun getKeywords(): List<String> {
         return keywords
+    }
+
+    fun getReferTo(): List<String> {
+        return referTo
     }
 
    /* fun getDate():String{

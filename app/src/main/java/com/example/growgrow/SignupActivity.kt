@@ -13,9 +13,12 @@ import androidx.core.view.isVisible
 import com.example.growgrow.databinding.ActivityEditProfileBinding
 import com.example.growgrow.databinding.ActivitySigninBinding
 import com.example.growgrow.databinding.ActivitySignupBinding
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ServerValue
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -74,9 +77,28 @@ class SignupActivity : AppCompatActivity() {
             else -> {
 
                 val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+                val credential = EmailAuthProvider.getCredential(email, password)
+
+                mAuth.currentUser!!
+                    .linkWithCredential(credential)
+                    .addOnCompleteListener { task ->
+                        if(task.isSuccessful){
+                            saveUserInfo(fullname, username, email)
+
+                        } else {
+
+                            val message = task.exception!!.toString()
+                            Toast.makeText(this,"Error: $message",Toast.LENGTH_LONG).show()
 
 
-                mAuth.createUserWithEmailAndPassword(email, password)
+                        }
+
+
+
+                    }
+
+
+               /* mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if(task.isSuccessful) {
 
@@ -92,6 +114,10 @@ class SignupActivity : AppCompatActivity() {
                             }
 
                             }
+
+                */
+
+
                         }
 
 
@@ -119,14 +145,17 @@ class SignupActivity : AppCompatActivity() {
         user["depart"] = "계열"
         user["major"] = "전공"
         user["region"] = "지역"
+       // user["refer_to"] = ""
+       // user["last_signin_at"] = ServerValue.TIMESTAMP
        // user["keywords"] = arrayListOf()
        // user["bios"] = arrayListOf(bio)
 
 
 
-        db.collection("Users").document(currentUserId).set(user)
+        db.collection("Users").document(currentUserId).update(user)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful){
+
 
                         Toast.makeText(this,"이메일 인증을 진행해주세요", Toast.LENGTH_LONG).show()
 

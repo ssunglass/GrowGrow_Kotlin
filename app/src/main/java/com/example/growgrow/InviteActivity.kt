@@ -13,12 +13,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.growgrow.Model.User
 import com.example.growgrow.databinding.ActivityInviteBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.dynamiclinks.ktx.androidParameters
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.iosParameters
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.util.jar.Manifest
 
@@ -29,6 +32,10 @@ class InviteActivity : AppCompatActivity() {
     private lateinit var displayName: String
     private val permissionRequest = 101
     private lateinit var linkText: String
+    private lateinit var db: FirebaseFirestore
+    private lateinit var auth : FirebaseAuth
+    private lateinit var userId: String
+    private lateinit var referTos: List<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +43,53 @@ class InviteActivity : AppCompatActivity() {
 
         _binding = ActivityInviteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+        userId = auth.currentUser?.uid.toString()
+
+        db.collection("Users").document(userId).addSnapshotListener{ snapshot, e ->
+            if (e != null) {
+                Log.w("tag", "Listen failed", e )
+                return@addSnapshotListener
+            }
+
+            if( snapshot != null && snapshot.exists()){
+                Log.d("TEST", "${snapshot.data}")
+                val user = snapshot.toObject<User>(User::class.java)
+
+                if (user != null) {
+
+                    referTos = user.getReferTo()
+                    val referByUid = user.getReferredBy()
+
+                    binding.referToName.text = referTos.toString()
+                    binding.referToCount.text = referTos.size.toString()
+
+                    if(referByUid.isNotEmpty()) {
+
+                        db.collection("Users").document(referByUid).get().addOnSuccessListener{ document ->
+                            if(document != null) {
+
+                                val referrer = document.toObject<User>(User::class.java)
+
+                                if(referrer != null) {
+
+                                    binding.referByName.text = referrer.getFullname()
+                                    
+                                }
+
+                            }
+
+                    }
+
+                    }
+
+                }
+            } else {
+                Log.d("NULL","DATA IS NULL")
+            }
+        }
 
 
         if (intent.hasExtra("displayName")) {
@@ -45,34 +99,43 @@ class InviteActivity : AppCompatActivity() {
 
         binding.createDynamiclinkBtn.setOnClickListener {
 
+            if(binding.referToCount.text.toString().toInt() >= 2){
+
+                Toast.makeText(this,"더이상 초대할 수 없습니다", Toast.LENGTH_LONG).show()
 
 
-            val user = Firebase.auth.currentUser!!
-            val uid = user.uid
-            val invitationLink = "https://growgrow.com/?invitedby=$uid"
-            Firebase.dynamicLinks.shortLinkAsync {
-                link = Uri.parse(invitationLink)
-                domainUriPrefix = "https://growgrow.page.link"
-                androidParameters("com.example.android") {
-                    minimumVersion = 125
+            } else {
+
+                val user = Firebase.auth.currentUser!!
+                val uid = user.uid
+                val invitationLink = "https://growgrow.com/?invitedby=$uid"
+                Firebase.dynamicLinks.shortLinkAsync {
+                    link = Uri.parse(invitationLink)
+                    domainUriPrefix = "https://growgrow.page.link"
+                    androidParameters("com.example.android") {
+                        minimumVersion = 125
+                    }
+                    /*  iosParameters("com.example.ios") {
+                          appStoreId = "123456789"
+                          minimumVersion = "1.0.1"
+                      } */
+                }.addOnSuccessListener { shortDynamicLink ->
+                    val mInvitationUrl = shortDynamicLink.shortLink
+                    val invitationLink = mInvitationUrl.toString()
+                    linkText = invitationLink
+
+                    sendMessage(linkText)
+
+
+
+
+
                 }
-              /*  iosParameters("com.example.ios") {
-                    appStoreId = "123456789"
-                    minimumVersion = "1.0.1"
-                } */
-            }.addOnSuccessListener { shortDynamicLink ->
-                val mInvitationUrl = shortDynamicLink.shortLink
-                val invitationLink = mInvitationUrl.toString()
-                linkText = invitationLink
-
-                sendMessage(linkText)
-
-
-
-
 
 
             }
+
+
         }
 
 
@@ -88,6 +151,7 @@ class InviteActivity : AppCompatActivity() {
                 permissionRequest)
         }
     }
+
     private fun myMessage(linkText: String) {
         val myNumber: String = binding.invitePhone.text.toString()
         if (myNumber == "") {
