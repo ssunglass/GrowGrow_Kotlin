@@ -66,24 +66,35 @@ class InviteActivity : AppCompatActivity() {
                     binding.referToName.text = referTos.toString()
                     binding.referToCount.text = referTos.size.toString()
 
+
                     if(referByUid.isNotEmpty()) {
 
-                        db.collection("Users").document(referByUid).get().addOnSuccessListener{ document ->
-                            if(document != null) {
 
-                                val referrer = document.toObject<User>(User::class.java)
+                          db.collection("Users").document(referByUid).get().addOnSuccessListener{ document ->
+                             if(document != null) {
 
-                                if(referrer != null) {
+                                 val referrer = document.toObject<User>(User::class.java)
 
-                                    binding.referByName.text = referrer.getFullname()
-                                    
-                                }
+                                 if(referrer != null) {
 
-                            }
+                                     binding.referByName.text = referrer.getFullname()
 
-                    }
+                                 }
 
-                    }
+                             }
+
+                     }
+
+
+
+                     } else {
+
+                        binding.referByName.text = "Dev"
+
+                     }
+
+
+
 
                 }
             } else {

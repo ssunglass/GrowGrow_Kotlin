@@ -87,7 +87,7 @@ class SigninActivity : AppCompatActivity() {
 
                 val referred = HashMap<String, Any>()
 
-                referred["referred_by"] = referrerUid.toString()
+                referred["referredBy"] = referrerUid.toString()
 
                 userRecord.set(referred)
 
