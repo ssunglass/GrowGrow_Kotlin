@@ -68,20 +68,37 @@
                     android:id="@+id/edit_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/edit"
-                    android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
+                    android:backgroundTint="#FFFF"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
-                    android:backgroundTint="#FFFF"
-                    />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_baseline_insights_24" />
 
-                <Button
+                <ImageButton
+                    android:id="@+id/add_keyword_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/edit_btn"
+                    android:backgroundTint="#FFFF"
+                    android:src="@drawable/ic_baseline_library_add_24" />
+
+                <ImageButton
+                    android:id="@+id/see_saved_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/add_keyword_btn"
+                    android:backgroundTint="#FFFF"
+                    android:src="@drawable/ic_baseline_bookmarks_24" />
+
+
+            <!--    <Button
                     android:id="@+id/see_saved_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/edit_btn"
-                    android:text="스크랩 보기" />
+                    android:text="스크랩 보기"
+                    /> -->
 
 
 
@@ -97,6 +114,7 @@
                     android:adjustViewBounds="true"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
+
                     android:layout_marginRight="20dp"
                     android:backgroundTint="#FFFF"
 
@@ -215,7 +233,7 @@
                     android:layout_marginBottom="20dp"
                     />
 
-                <LinearLayout
+              <!--  <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -223,7 +241,9 @@
 
 
 
-                <Button
+
+
+             <Button
                     android:id="@+id/add_keyword_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -231,7 +251,7 @@
                     android:layout_marginRight="15dp"
                     />
 
-                    <Button
+                   <Button
                         android:id="@+id/add_bio_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -247,7 +267,7 @@
 
                         />
 
-                </LinearLayout>
+                </LinearLayout> -->
 
 
 
@@ -270,7 +290,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+               >
 
                 <View
                     android:layout_width="match_parent"
@@ -281,6 +302,23 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     />
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+
+
+                    >
+
+                    <ImageButton
+                        android:id="@+id/add_bio_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#FFFF"
+                        android:src="@drawable/ic_baseline_post_add_24"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -294,6 +332,15 @@
                     android:includeFontPadding="false"
                     />
 
+                    <ImageButton
+                        android:id="@+id/edit_bio_list_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#FFFF"
+                        android:src="@drawable/ic_baseline_edit_road_24"/>
+
+                </LinearLayout
+                    >
 
             </LinearLayout>
 

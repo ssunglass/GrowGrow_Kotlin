@@ -41,13 +41,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/begin_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="0dp">
-
-
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -85,21 +78,20 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp" />
 
-    <Button
+   <!-- <Button
         android:id="@+id/expandable_btn"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="키워드 필터"
-        android:backgroundTint="@color/colorBlack"/>
+        android:backgroundTint="@color/colorBlack"/> -->
 
     <LinearLayout
-        android:id="@+id/expandable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <TextView
@@ -109,7 +101,7 @@
             android:text="계열"/>
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/search_chipgroup"
+            android:id="@+id/search_depart_chipgroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -178,7 +170,57 @@
             android:text="지역"
             android:includeFontPadding="false"/>
 
-        <Spinner
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/search_region_chipgroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="서울/경기"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="강원"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="충청"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="대구/경북"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="전북/전남"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textAlignment="center"
+                android:text="제주"/>
+
+
+
+
+
+
+        </com.google.android.material.chip.ChipGroup>
+
+     <!--   <Spinner
             android:id="@+id/region_filter_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -189,22 +231,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:text=""/>
+            android:text=""/> -->
 
      <Button
          android:id="@+id/init_condition_chip"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="적용하기"/>
+         android:text="검색하기"/>
 
 
     </LinearLayout>
 </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
 
-    <androidx.recyclerview.widget.RecyclerView
+
+  <!--  <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -212,7 +254,7 @@
 
 
     </androidx.recyclerview.widget.RecyclerView>
-
+-->
 
 
 </LinearLayout>

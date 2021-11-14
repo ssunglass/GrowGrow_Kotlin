@@ -123,13 +123,13 @@ class InviteActivity : AppCompatActivity() {
                 Firebase.dynamicLinks.shortLinkAsync {
                     link = Uri.parse(invitationLink)
                     domainUriPrefix = "https://growgrow.page.link"
-                    androidParameters("com.example.android") {
+                    androidParameters("com.example.growgrow") {
                         minimumVersion = 125
                     }
-                    /*  iosParameters("com.example.ios") {
+                     iosParameters("com.stationLab.GrowGrow-ios") {
                           appStoreId = "123456789"
-                          minimumVersion = "1.0.1"
-                      } */
+                          minimumVersion = "1.0.0"
+                      }
                 }.addOnSuccessListener { shortDynamicLink ->
                     val mInvitationUrl = shortDynamicLink.shortLink
                     val invitationLink = mInvitationUrl.toString()

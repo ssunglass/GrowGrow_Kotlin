@@ -47,13 +47,12 @@
                     android:id="@+id/edit_bio_btn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/edit"
-                    android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
+                    android:backgroundTint="#FFFF"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:backgroundTint="#FFFF"
-                    />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/edit" />
 
 
 

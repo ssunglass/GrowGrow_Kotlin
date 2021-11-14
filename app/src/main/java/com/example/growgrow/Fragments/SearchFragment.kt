@@ -38,9 +38,9 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private lateinit var myAdapter : SearchAdapter
-    private lateinit var db : FirebaseFirestore
-    private lateinit var recyclerView : RecyclerView
+    private lateinit var myAdapter: SearchAdapter
+    private lateinit var db: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
     private lateinit var query: Query
     private lateinit var options: FirestoreRecyclerOptions<User>
     private lateinit var filterRegion: String
@@ -56,25 +56,22 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
 
         db = FirebaseFirestore.getInstance()
-        recyclerView = binding.recyclerViewSearch
-        val linearLayoutManagerWrapepr = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
+        //  recyclerView = binding.recyclerViewSearch
+        //  val linearLayoutManagerWrapepr = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         selectedChips = arrayListOf()
-        filterRegion = ""
+        //   filterRegion = ""
 
-        recyclerView.layoutManager = linearLayoutManagerWrapepr //LinearLayoutManager(requireContext())
+        //   recyclerView.layoutManager = linearLayoutManagerWrapepr //LinearLayoutManager(requireContext())
 
         query = db.collection("Users")
-        options  = FirestoreRecyclerOptions.Builder<User>()
+        options = FirestoreRecyclerOptions.Builder<User>()
             .setQuery(query, User::class.java)
             .build()
 
 
-        myAdapter = SearchAdapter(options  ,this@SearchFragment)
-        recyclerView.adapter = myAdapter
-
-
-
+        //  myAdapter = SearchAdapter(options  ,this@SearchFragment)
+        //   recyclerView.adapter = myAdapter
 
 
         binding.initConditionChip.setOnClickListener {
@@ -83,16 +80,15 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
             selectedChips.clear()
 
-            binding.searchChipgroup.checkedChipIds.forEach{
+            binding.searchDepartChipgroup.checkedChipIds.forEach {
                 val chip = binding.root.findViewById<Chip>(it).text.toString()
                 selectedChips.add(chip)
             }
 
-            this.filterRegion = binding.filteredRegion.text.toString()
+            //  this.filterRegion = binding.filteredRegion.text.toString()
 
 
-
-          /*  query = if(filterRegion.isNotEmpty()){
+            /*  query = if(filterRegion.isNotEmpty()){
 
                 db.collection("Users").whereEqualTo("region", filterRegion)
 
@@ -106,27 +102,34 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
            */
 
-            when{
-                search.isEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty()->  query = db.collection("Users")
-                search.isEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query = db.collection("Users").whereIn("depart",selectedChips)
-                search.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereEqualTo("region", filterRegion)
-                search.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isNotEmpty() -> query = db.collection("Users").whereIn("depart",selectedChips).whereEqualTo("region", filterRegion)
+            when {
+                search.isEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty() -> query =
+                    db.collection("Users")
+                search.isEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query =
+                    db.collection("Users").whereIn("depart", selectedChips)
+                search.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query =
+                    db.collection("Users").whereEqualTo("region", filterRegion)
+                search.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isNotEmpty() -> query =
+                    db.collection("Users").whereIn("depart", selectedChips)
+                        .whereEqualTo("region", filterRegion)
 
 
-                search.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereArrayContains("keywords_search", search)
-                search.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query = db.collection("Users").whereArrayContains("keywords_search", search).whereIn("depart",selectedChips)
-                search.isNotEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereArrayContains("keywords_search", search).whereEqualTo("region", filterRegion)
-
-
-
+                search.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty() -> query =
+                    db.collection("Users").whereArrayContains("keywords_search", search)
+                search.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query =
+                    db.collection("Users").whereArrayContains("keywords_search", search)
+                        .whereIn("depart", selectedChips)
+                search.isNotEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query =
+                    db.collection("Users").whereArrayContains("keywords_search", search)
+                        .whereEqualTo("region", filterRegion)
 
 
                 else -> {
 
                     query = db.collection("Users")
-                            .whereArrayContains("keywords_search", search)
-                            .whereEqualTo("region", filterRegion)
-                            .whereIn("depart",selectedChips)
+                        .whereArrayContains("keywords_search", search)
+                        .whereEqualTo("region", filterRegion)
+                        .whereIn("depart", selectedChips)
 
 
                 }
@@ -147,23 +150,21 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
 
 
-            options  = FirestoreRecyclerOptions.Builder<User>()
-                    .setQuery(query, User::class.java)
-                    .build()
+            options = FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(query, User::class.java)
+                .build()
 
-            TransitionManager.beginDelayedTransition(binding.beginLayout, AutoTransition())
-            binding.expandableLayout.visibility = View.GONE
-            binding.expandableBtn.text = "키워드 필터"
+            //  TransitionManager.beginDelayedTransition(binding.beginLayout, AutoTransition())
+            //  binding.expandableLayout.visibility = View.GONE
+            //  binding.expandableBtn.text = "키워드 필터"
 
             myAdapter.updateOptions(options)
             myAdapter.notifyDataSetChanged()
 
 
-
-
         }
 
-        binding.searchBar.addTextChangedListener(object : TextWatcher{
+        binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -173,30 +174,37 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-              //  filterRegion = binding.filteredRegion.text.toString()
+                //  filterRegion = binding.filteredRegion.text.toString()
                 val searchText = s.toString()
 
-                when{
-                    searchText.isEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty()->  query = db.collection("Users")
-                    searchText.isEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query = db.collection("Users").whereIn("depart",selectedChips)
-                    searchText.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereEqualTo("region", filterRegion)
-                    searchText.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isNotEmpty() -> query = db.collection("Users").whereIn("depart",selectedChips).whereEqualTo("region", filterRegion)
+                when {
+                    searchText.isEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty() -> query =
+                        db.collection("Users")
+                    searchText.isEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query =
+                        db.collection("Users").whereIn("depart", selectedChips)
+                    searchText.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query =
+                        db.collection("Users").whereEqualTo("region", filterRegion)
+                    searchText.isEmpty() && filterRegion.isNotEmpty() && selectedChips.isNotEmpty() -> query =
+                        db.collection("Users").whereIn("depart", selectedChips)
+                            .whereEqualTo("region", filterRegion)
 
 
-                    searchText.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereArrayContains("keywords_search", searchText )
-                    searchText.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query = db.collection("Users").whereArrayContains("keywords_search", searchText).whereIn("depart",selectedChips)
-                    searchText.isNotEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query = db.collection("Users").whereArrayContains("keywords_search", searchText).whereEqualTo("region", filterRegion)
-
-
-
+                    searchText.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isEmpty() -> query =
+                        db.collection("Users").whereArrayContains("keywords_search", searchText)
+                    searchText.isNotEmpty() && filterRegion.isEmpty() && selectedChips.isNotEmpty() -> query =
+                        db.collection("Users").whereArrayContains("keywords_search", searchText)
+                            .whereIn("depart", selectedChips)
+                    searchText.isNotEmpty() && filterRegion.isNotEmpty() && selectedChips.isEmpty() -> query =
+                        db.collection("Users").whereArrayContains("keywords_search", searchText)
+                            .whereEqualTo("region", filterRegion)
 
 
                     else -> {
 
                         query = db.collection("Users")
-                                .whereArrayContains("keywords_search", searchText)
-                                .whereEqualTo("region", filterRegion)
-                                .whereIn("depart",selectedChips)
+                            .whereArrayContains("keywords_search", searchText)
+                            .whereEqualTo("region", filterRegion)
+                            .whereIn("depart", selectedChips)
 
 
                     }
@@ -205,9 +213,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
                 }
 
 
-
-
-               /* if(s.toString().isEmpty()) {
+                /* if(s.toString().isEmpty()) {
 
                     query = db.collection("Users").whereEqualTo("region", filterRegion)
 
@@ -224,7 +230,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
 
 
-                options  = FirestoreRecyclerOptions.Builder<User>()
+                options = FirestoreRecyclerOptions.Builder<User>()
                     .setQuery(query, User::class.java)
                     .build()
 
@@ -237,15 +243,13 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
             }
 
 
-
         })
 
 
+        // setupSpinnerRegion()
+        // setupSpinnerHandler()
 
-        setupSpinnerRegion()
-        setupSpinnerHandler()
-
-        binding.expandableBtn.setOnClickListener {
+        /* binding.expandableBtn.setOnClickListener {
 
             if(binding.expandableLayout.visibility == View.GONE) {
                TransitionManager.beginDelayedTransition(binding.beginLayout, AutoTransition())
@@ -262,6 +266,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
             }
             }
 
+        */
 
 
         // Inflate the layout for this fragment
@@ -286,7 +291,9 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
     }
 
-    private fun setupSpinnerRegion(){
+
+
+  /*  private fun setupSpinnerRegion(){
         val region = resources.getStringArray(R.array.region_array)
         val adapter = ArrayAdapter(
             requireContext(),
@@ -298,7 +305,9 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
 
     }
 
-    private fun setupSpinnerHandler() {
+   */
+
+    /* private fun setupSpinnerHandler() {
         binding.regionFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
@@ -325,7 +334,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnItemClickListener {
         }
 
 
-        }
+        } */
 
 
 
@@ -372,6 +381,8 @@ class LinearLayoutManagerWrapper: LinearLayoutManager {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {}
     override fun supportsPredictiveItemAnimations(): Boolean { return false }
 }
+
+
 
 
 

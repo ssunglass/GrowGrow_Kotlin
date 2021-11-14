@@ -7,11 +7,14 @@
         <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/activity_email_verify.xml" value="0.1" />
         <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/activity_invite.xml" value="0.27445652173913043" />
         <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/activity_saved_user_list.xml" value="0.14" />
+        <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/activity_searched.xml" value="0.2857789855072464" />
         <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/activity_show_profile.xml" value="0.1" />
         <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/activity_signin.xml" value="0.22" />
-        <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/activity_signup.xml" value="0.18" />
+        <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/activity_signup.xml" value="0.22" />
+        <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/bio_item.xml" value="0.14108409321175278" />
         <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
+        <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/Androidproject/GrowGrow/app/src/main/res/layout/user_search_item.xml" value="0.1" />
       </map>
     </option>

@@ -79,8 +79,11 @@ class SignupActivity : AppCompatActivity() {
                 val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
                 val credential = EmailAuthProvider.getCredential(email, password)
 
-                mAuth.currentUser!!
-                    .linkWithCredential(credential)
+
+
+               /* mAuth.currentUser!!
+                    .linkWithCredential(credential) */
+                mAuth.createUserWithEmailAndPassword(email,password)
                     .addOnCompleteListener { task ->
                         if(task.isSuccessful){
                             saveUserInfo(fullname, username, email)
@@ -152,7 +155,7 @@ class SignupActivity : AppCompatActivity() {
 
 
 
-        db.collection("Users").document(currentUserId).update(user)
+        db.collection("Users").document(currentUserId).set(user)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful){
 
